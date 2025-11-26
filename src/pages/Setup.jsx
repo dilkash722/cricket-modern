@@ -34,7 +34,7 @@ export default function Setup() {
       B: teamB.trim(),
     });
 
-    navigate("/toss"); // 👈 CORRECT ROUTE (Next Step)
+    navigate("/toss"); //  CORRECT ROUTE (Next Step)
   };
 
   return (
@@ -63,7 +63,7 @@ export default function Setup() {
               <Label htmlFor="teamA">Team A</Label>
               <Input
                 id="teamA"
-                placeholder="Example: Street Warriors"
+                placeholder="Example: Nikhra"
                 value={teamA}
                 onChange={(e) => setTeamA(e.target.value)}
                 className="border border-slate-300 focus:border-slate-400 focus:ring-0 text-sm"
@@ -75,7 +75,7 @@ export default function Setup() {
               <Label htmlFor="teamB">Team B</Label>
               <Input
                 id="teamB"
-                placeholder="Example: Gully Kings"
+                placeholder="Example: Kamraili"
                 value={teamB}
                 onChange={(e) => setTeamB(e.target.value)}
                 className="border border-slate-300 focus:border-slate-400 focus:ring-0 text-sm"

@@ -75,9 +75,15 @@ export default function Home() {
               </p>
 
               <p className="pt-2 text-xs text-red-600">
-                Important: The match data is only stored in your browser memory.
-                If you refresh the page or press back/forward, all match
-                progress will be lost.
+                Important: Match data stays only in your phone Browser. If you
+                refresh, go back, or change mobile/desktop mode, the match will
+                reset.
+              </p>
+
+              <p className="pt-1 text-xs text-blue-700 font-medium">
+                Tip: For better visibility, turn on Desktop Mode before you
+                start the match. Do not change Mobile/Desktop mode during the
+                match.
               </p>
             </div>
 
