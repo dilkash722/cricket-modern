@@ -32,3 +32,5 @@ dist-ssr/
 
 # System files
 Thumbs.db
+
+.vercel

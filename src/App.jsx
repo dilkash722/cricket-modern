@@ -15,7 +15,7 @@ export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // ⬇️ Detect HARD REFRESH only
+  //  Detect HARD REFRESH only
   useEffect(() => {
     const navType = performance.getEntriesByType("navigation")[0]?.type;
 
