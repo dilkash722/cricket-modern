@@ -228,7 +228,7 @@ export default function Scoreboard() {
     inningsNumber === 2 ? (battingTeam === teamA ? teamB : teamA) : battingTeam;
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="max-w-5xl mx-auto p-4 md:p-6">
       <div className="mb-4 text-center text-sm font-semibold">
         {matchFinished
           ? "Match Completed"
@@ -783,13 +783,6 @@ export default function Scoreboard() {
             </div>
 
             <div className="flex gap-2">
-              <Button
-                variant="outline"
-                onClick={() => dispatch({ type: "RESET_ALL" })}
-              >
-                Reset
-              </Button>
-
               <Button variant="outline" onClick={handleEndInnings}>
                 End Innings
               </Button>
