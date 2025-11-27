@@ -516,7 +516,7 @@ export default function Scoreboard() {
 
           {/* Bowler Summary */}
           <div className="mt-6">
-            <h3 className="font-semibold mb-3">Bowler Summary</h3>
+            <h3 className="font-semibold mb-3">Bowlers</h3>
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b">
@@ -547,7 +547,9 @@ export default function Scoreboard() {
 
                     return (
                       <tr key={b} className="border-t">
-                        <td className="py-2 font-medium">{b}</td>
+                        <td className="py-2 font-medium">
+                          {b === currentBowler ? `${b} *` : b}
+                        </td>
                         <td className="text-center">{o}</td>
                         <td className="text-center">{ob.runs}</td>
                         <td className="text-center">{ob.wickets}</td>
@@ -624,18 +626,27 @@ export default function Scoreboard() {
                         <th className="text-center">O</th>
                         <th className="text-center">R</th>
                         <th className="text-center">W</th>
+                        <th className="text-center">M</th>
+                        <th className="text-center">Eco</th>
                       </tr>
                     </thead>
                     <tbody>
                       {Object.keys(firstInningsBowlers).map((b) => {
                         const ob = firstInningsBowlers[b];
                         const o = `${Math.floor(ob.balls / 6)}.${ob.balls % 6}`;
+                        const eco =
+                          ob.balls > 0
+                            ? (ob.runs / (ob.balls / 6)).toFixed(1)
+                            : "0.0";
+
                         return (
                           <tr key={b} className="border-t">
                             <td className="py-1">{b}</td>
                             <td className="text-center">{o}</td>
                             <td className="text-center">{ob.runs}</td>
                             <td className="text-center">{ob.wickets}</td>
+                            <td className="text-center">{ob.maidens || 0}</td>
+                            <td className="text-center">{eco}</td>
                           </tr>
                         );
                       })}
@@ -736,18 +747,27 @@ export default function Scoreboard() {
                         <th className="text-center">O</th>
                         <th className="text-center">R</th>
                         <th className="text-center">W</th>
+                        <th className="text-center">M</th>
+                        <th className="text-center">Eco</th>
                       </tr>
                     </thead>
                     <tbody>
                       {Object.keys(bowlerStats).map((b) => {
                         const ob = bowlerStats[b];
                         const o = `${Math.floor(ob.balls / 6)}.${ob.balls % 6}`;
+                        const eco =
+                          ob.balls > 0
+                            ? (ob.runs / (ob.balls / 6)).toFixed(1)
+                            : "0.0";
+
                         return (
                           <tr key={b} className="border-t">
                             <td className="py-1">{b}</td>
                             <td className="text-center">{o}</td>
                             <td className="text-center">{ob.runs}</td>
                             <td className="text-center">{ob.wickets}</td>
+                            <td className="text-center">{ob.maidens || 0}</td>
+                            <td className="text-center">{eco}</td>
                           </tr>
                         );
                       })}
