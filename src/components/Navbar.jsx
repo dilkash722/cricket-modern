@@ -27,7 +27,7 @@ export default function Navbar() {
 
           {/* Avatar */}
           <img
-            src="https://media.licdn.com/dms/image/v2/D4D03AQEldctReMxvhQ/profile-displayphoto-crop_800_800/B4DZncvjCtHsAI-/0/1760345076623?e=1765411200&v=beta&t=1l-PS0zhMmlgdK1t-nsRQjOYzH7ZFpO2CK9FVATZy30"
+            src="https://media.licdn.com/dms/image/v2/D4D03AQEldctReMxvhQ/profile-displayphoto-crop_800_800/B4DZncvjCtHsAI-/0/1760345076623?e=1767225600&v=beta&t=Xd69igqzxfoCJQRClTPXHGHGqy_3S-dojH1WoXlaMeU"
             alt="Md Dilkash"
             className="
               w-10 h-10 rounded-full border border-slate-300
