@@ -42,6 +42,26 @@ export default function Result() {
   const RR1 = getRR(firstInningsTotal, firstInningsOvers);
   const RR2 = getRR(runs, secondInningsOvers);
 
+  // =====================================================
+  // ✅ ONLY LOGIC FIX (NO UI / JSX CHANGE AT ALL)
+  // =====================================================
+  if (result && firstInningsTotal != null && runs != null) {
+    if (runs > firstInningsTotal) {
+      result.winner = teamB;
+      result.winType = "wickets";
+      result.margin = 10 - (fallOfWickets?.length || 0);
+    } else if (runs < firstInningsTotal) {
+      result.winner = teamA;
+      result.winType = "runs";
+      result.margin = firstInningsTotal - runs;
+    } else {
+      result.winType = "tie";
+      delete result.winner;
+      delete result.margin;
+    }
+  }
+  // =====================================================
+
   const loserTeam =
     result?.winner === teamA ? teamB : result?.winner === teamB ? teamA : "-";
 

@@ -2,14 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectItem,
-  SelectContent,
-} from "@/components/ui/select";
-
 import { useNavigate } from "react-router-dom";
 import { useMatch } from "../context/MatchContext";
 
@@ -17,7 +9,6 @@ export default function Toss() {
   const navigate = useNavigate();
   const { state, dispatch } = useMatch();
 
-  // AUTO FILL TEAM NAMES FROM CONTEXT
   const [teamA, setTeamA] = useState(state.teamA || "");
   const [teamB, setTeamB] = useState(state.teamB || "");
 
@@ -30,25 +21,27 @@ export default function Toss() {
   const [flipping, setFlipping] = useState(false);
   const [animate, setAnimate] = useState(false);
 
-  // WHEN SETUP SENDS NEW TEAM NAMES → AUTO UPDATE
+  // sync team names
   useEffect(() => {
     setTeamA(state.teamA || "");
     setTeamB(state.teamB || "");
   }, [state.teamA, state.teamB]);
 
-  // UPDATE TEAM A
+  // auto opposite
+  useEffect(() => {
+    setTeamBChoice(teamAChoice === "HEADS" ? "TAILS" : "HEADS");
+  }, [teamAChoice]);
+
   const handleTeamA = (val) => {
     setTeamA(val);
     dispatch({ type: "SET_TEAMS", A: val, B: teamB });
   };
 
-  // UPDATE TEAM B
   const handleTeamB = (val) => {
     setTeamB(val);
     dispatch({ type: "SET_TEAMS", A: teamA, B: val });
   };
 
-  // TOSS LOGIC
   const startToss = () => {
     if (!teamA || !teamB) return;
 
@@ -62,9 +55,7 @@ export default function Toss() {
     setTimeout(() => {
       setResult(final);
       const finalWinner = teamAChoice === final ? teamA : teamB;
-
-      setWinner(finalWinner + " won the toss");
-
+      setWinner(`${finalWinner} won the toss`);
       setFlipping(false);
 
       dispatch({
@@ -78,93 +69,96 @@ export default function Toss() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-3 py-6 md:px-4 md:py-10 text-gray-900">
-      <Card className="rounded-2xl shadow-lg bg-white/90 border-0 w-full">
-        <CardHeader className="text-center pb-1">
-          <CardTitle className="text-3xl font-semibold">Match Toss</CardTitle>
-          <p className="text-xs text-gray-500 mt-1">
-            Team names auto-filled from Setup page
+    <div className="max-w-2xl mx-auto px-4 py-10 text-slate-900">
+      <Card className="rounded-2xl shadow-xl bg-white border-0">
+        <CardHeader className="text-center pb-2">
+          <CardTitle className="text-3xl font-bold tracking-tight">
+            Match Toss
+          </CardTitle>
+          <p className="text-sm text-gray-500 mt-1">
+            Choose Heads or Tails — other team is auto assigned
           </p>
         </CardHeader>
 
-        <CardContent className="space-y-10 py-6">
-          {/* GRID */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-6">
+        <CardContent className="space-y-12 pt-6">
+          {/* TEAMS GRID */}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-end">
             {/* TEAM A */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium block">
-                {teamA || "Team A"}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">
+                Team A
               </label>
               <Input
                 value={teamA}
                 onChange={(e) => handleTeamA(e.target.value)}
-                placeholder="Team A"
-                className="h-9 text-sm"
+                placeholder="Enter Team A"
+                className="h-10"
               />
             </div>
 
             {/* TEAM A CHOICE */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium block">
-                {teamA || "Choice A"}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">
+                Choice
               </label>
 
-              <Select value={teamAChoice} onValueChange={setTeamAChoice}>
-                <SelectTrigger className="h-8 px-1 py-0 text-xs w-20">
-                  <SelectValue />
-                </SelectTrigger>
-
-                <SelectContent className="w-20 text-xs">
-                  <SelectItem value="HEADS">HEADS</SelectItem>
-                  <SelectItem value="TAILS">TAILS</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="flex rounded-lg border border-gray-300 overflow-hidden">
+                {["HEADS", "TAILS"].map((opt) => (
+                  <button
+                    key={opt}
+                    onClick={() => setTeamAChoice(opt)}
+                    className={`flex-1 py-2 text-sm font-semibold transition
+                      ${
+                        teamAChoice === opt
+                          ? "bg-slate-900 text-white"
+                          : "bg-white text-gray-600 hover:bg-gray-100"
+                      }
+                    `}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* VS */}
-            <div className="flex justify-center items-end md:items-center pb-1">
-              <span className="font-semibold text-gray-500 text-lg">VS</span>
+            <div className="flex justify-center">
+              <span className="text-sm font-semibold text-gray-400 tracking-wide">
+                VS
+              </span>
             </div>
 
             {/* TEAM B */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium block">
-                {teamB || "Team B"}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">
+                Team B
               </label>
               <Input
                 value={teamB}
                 onChange={(e) => handleTeamB(e.target.value)}
-                placeholder="Team B"
-                className="h-9 text-sm"
+                placeholder="Enter Team B"
+                className="h-10"
               />
             </div>
 
-            {/* TEAM B CHOICE */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium block">
-                {teamB || "Choice B"}
+            {/* TEAM B AUTO */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">
+                Auto Choice
               </label>
-
-              <Select value={teamBChoice} onValueChange={setTeamBChoice}>
-                <SelectTrigger className="h-8 px-1 py-0 text-xs w-20">
-                  <SelectValue />
-                </SelectTrigger>
-
-                <SelectContent className="w-20 text-xs">
-                  <SelectItem value="HEADS">HEADS</SelectItem>
-                  <SelectItem value="TAILS">TAILS</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="h-10 flex items-center justify-center rounded-lg bg-gray-100 border border-dashed text-sm font-semibold text-gray-800">
+                {teamBChoice}
+              </div>
             </div>
           </div>
 
           {/* COIN */}
           <div className="flex justify-center">
             <div
-              className={`
-                w-40 h-40 rounded-full bg-gradient-to-b
-                from-yellow-200 to-yellow-400 border border-yellow-500/40
-                shadow-xl flex items-center justify-center text-3xl font-semibold
+              className={`w-40 h-40 rounded-full bg-gradient-to-b
+                from-yellow-200 to-yellow-400
+                border border-yellow-500/40 shadow-2xl
+                flex items-center justify-center text-3xl font-bold
                 ${animate ? "coin-spin" : ""}
               `}
             >
@@ -172,31 +166,30 @@ export default function Toss() {
             </div>
           </div>
 
-          {/* TOSS BUTTON */}
+          {/* ACTION */}
           <div className="flex justify-center">
             <Button
               onClick={startToss}
               disabled={flipping}
-              className="w-52 h-11 rounded-xl bg-gray-900 text-white hover:bg-gray-800"
+              className="w-56 h-11 rounded-xl text-base bg-slate-900 hover:bg-slate-800 text-gray-300"
             >
               {flipping ? "Flipping..." : "Start Toss"}
             </Button>
           </div>
 
-          {/* TOSS RESULT */}
+          {/* RESULT */}
           {winner && (
-            <div className="text-center text-gray-800 bg-green-100 px-4 py-3 rounded-lg shadow-sm font-medium text-sm">
+            <div className="text-center bg-green-100 text-green-900 px-4 py-3 rounded-xl font-semibold">
               {winner}
             </div>
           )}
 
-          {/* NEXT BUTTONS */}
+          {/* NAV */}
           {winner && (
-            <div className="flex items-center justify-between mt-4 px-1">
+            <div className="flex justify-between">
               <Button variant="outline" onClick={() => navigate("/setup")}>
                 Back
               </Button>
-
               <Button variant="outline" onClick={() => navigate("/decision")}>
                 Go to Decision
               </Button>
