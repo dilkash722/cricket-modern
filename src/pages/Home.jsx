@@ -61,7 +61,7 @@ export default function Home() {
           </h2>
 
           <p className="text-gray-500 text-sm sm:text-base mt-1">
-            Full Stack Developer
+            Full Stack Software Engineer
           </p>
         </div>
       </div>

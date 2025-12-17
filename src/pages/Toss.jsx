@@ -21,13 +21,11 @@ export default function Toss() {
   const [flipping, setFlipping] = useState(false);
   const [animate, setAnimate] = useState(false);
 
-  // sync team names
   useEffect(() => {
     setTeamA(state.teamA || "");
     setTeamB(state.teamB || "");
   }, [state.teamA, state.teamB]);
 
-  // auto opposite
   useEffect(() => {
     setTeamBChoice(teamAChoice === "HEADS" ? "TAILS" : "HEADS");
   }, [teamAChoice]);
@@ -71,11 +69,11 @@ export default function Toss() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-10 text-slate-900">
       <Card className="rounded-2xl shadow-xl bg-white border-0">
-        <CardHeader className="text-center pb-2">
-          <CardTitle className="text-3xl font-bold tracking-tight">
+        <CardHeader className="text-center pb-2 space-y-1">
+          <CardTitle className="text-[26px] font-semibold tracking-tight leading-tight">
             Match Toss
           </CardTitle>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-[13px] leading-snug text-gray-500">
             Choose Heads or Tails — other team is auto assigned
           </p>
         </CardHeader>
@@ -84,21 +82,21 @@ export default function Toss() {
           {/* TEAMS GRID */}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-end">
             {/* TEAM A */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
+            <div className="space-y-1.5">
+              <label className="text-[12px] font-medium tracking-wide text-gray-700">
                 Team A
               </label>
               <Input
                 value={teamA}
                 onChange={(e) => handleTeamA(e.target.value)}
                 placeholder="Enter Team A"
-                className="h-10"
+                className="h-10 text-[13px]"
               />
             </div>
 
             {/* TEAM A CHOICE */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
+            <div className="space-y-1.5">
+              <label className="text-[12px] font-medium tracking-wide text-gray-700">
                 Choice
               </label>
 
@@ -107,7 +105,7 @@ export default function Toss() {
                   <button
                     key={opt}
                     onClick={() => setTeamAChoice(opt)}
-                    className={`flex-1 py-2 text-sm font-semibold transition
+                    className={`flex-1 py-2 text-[12px] font-semibold tracking-wide transition
                       ${
                         teamAChoice === opt
                           ? "bg-slate-900 text-white"
@@ -123,30 +121,30 @@ export default function Toss() {
 
             {/* VS */}
             <div className="flex justify-center">
-              <span className="text-sm font-semibold text-gray-400 tracking-wide">
+              <span className="text-[12px] font-semibold tracking-[0.25em] text-gray-400">
                 VS
               </span>
             </div>
 
             {/* TEAM B */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
+            <div className="space-y-1.5">
+              <label className="text-[12px] font-medium tracking-wide text-gray-700">
                 Team B
               </label>
               <Input
                 value={teamB}
                 onChange={(e) => handleTeamB(e.target.value)}
                 placeholder="Enter Team B"
-                className="h-10"
+                className="h-10 text-[13px]"
               />
             </div>
 
             {/* TEAM B AUTO */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
+            <div className="space-y-1.5">
+              <label className="text-[12px] font-medium tracking-wide text-gray-700">
                 Auto Choice
               </label>
-              <div className="h-10 flex items-center justify-center rounded-lg bg-gray-100 border border-dashed text-sm font-semibold text-gray-800">
+              <div className="h-10 flex items-center justify-center rounded-lg bg-gray-100 border border-dashed text-[13px] font-semibold text-gray-800 tracking-wide">
                 {teamBChoice}
               </div>
             </div>
@@ -158,7 +156,8 @@ export default function Toss() {
               className={`w-40 h-40 rounded-full bg-gradient-to-b
                 from-yellow-200 to-yellow-400
                 border border-yellow-500/40 shadow-2xl
-                flex items-center justify-center text-3xl font-bold
+                flex items-center justify-center
+                text-[28px] font-bold tracking-tight
                 ${animate ? "coin-spin" : ""}
               `}
             >
@@ -171,7 +170,7 @@ export default function Toss() {
             <Button
               onClick={startToss}
               disabled={flipping}
-              className="w-56 h-11 rounded-xl text-base bg-slate-900 hover:bg-slate-800 text-gray-300"
+              className="w-56 h-11 rounded-xl text-[14px] font-medium tracking-wide bg-slate-900 hover:bg-slate-800 text-gray-300"
             >
               {flipping ? "Flipping..." : "Start Toss"}
             </Button>
@@ -179,7 +178,7 @@ export default function Toss() {
 
           {/* RESULT */}
           {winner && (
-            <div className="text-center bg-green-100 text-green-900 px-4 py-3 rounded-xl font-semibold">
+            <div className="text-center bg-green-100 text-green-900 px-4 py-3 rounded-xl text-[14px] font-semibold tracking-tight">
               {winner}
             </div>
           )}
@@ -187,10 +186,19 @@ export default function Toss() {
           {/* NAV */}
           {winner && (
             <div className="flex justify-between">
-              <Button variant="outline" onClick={() => navigate("/setup")}>
+              <Button
+                variant="outline"
+                className="text-[13px] font-medium"
+                onClick={() => navigate("/setup")}
+              >
                 Back
               </Button>
-              <Button variant="outline" onClick={() => navigate("/decision")}>
+
+              <Button
+                variant="outline"
+                className="text-[13px] font-medium"
+                onClick={() => navigate("/decision")}
+              >
                 Go to Decision
               </Button>
             </div>
@@ -198,7 +206,6 @@ export default function Toss() {
         </CardContent>
       </Card>
 
-      {/* ANIMATION */}
       <style>{`
         .coin-spin {
           animation: flip 0.65s cubic-bezier(.25,.6,.4,1.4) infinite;

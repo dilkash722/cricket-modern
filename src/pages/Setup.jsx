@@ -34,24 +34,29 @@ export default function Setup() {
       B: teamB.trim(),
     });
 
-    navigate("/toss"); //  CORRECT ROUTE (Next Step)
+    navigate("/toss");
   };
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 space-y-4">
+      {/* PAGE HEADING */}
       <div className="space-y-1">
-        <h2 className="text-2xl font-semibold tracking-tight text-slate-900">
+        <h2 className="text-[22px] font-semibold tracking-tight leading-tight text-slate-900">
           Match Setup
         </h2>
-        <p className="text-sm text-slate-500">
+        <p className="text-[13px] leading-snug text-slate-500">
           Create teams to start the match process.
         </p>
       </div>
 
       <Card className="shadow-sm border-slate-200">
-        <CardHeader>
-          <CardTitle className="text-base">Teams</CardTitle>
-          <CardDescription className="text-xs">Step 1 of 5</CardDescription>
+        <CardHeader className="space-y-0.5">
+          <CardTitle className="text-[15px] font-medium tracking-tight">
+            Teams
+          </CardTitle>
+          <CardDescription className="text-[11px] tracking-wide">
+            Step 1 of 5
+          </CardDescription>
         </CardHeader>
 
         <Separator />
@@ -59,33 +64,43 @@ export default function Setup() {
         <CardContent className="pt-4 space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
             {/* TEAM A */}
-            <div className="space-y-2">
-              <Label htmlFor="teamA">Team A</Label>
+            <div className="space-y-1.5">
+              <Label
+                htmlFor="teamA"
+                className="text-[12px] font-medium tracking-wide"
+              >
+                Team A
+              </Label>
               <Input
                 id="teamA"
                 placeholder="Example: Nikhra"
                 value={teamA}
                 onChange={(e) => setTeamA(e.target.value)}
-                className="border border-slate-300 focus:border-slate-400 focus:ring-0 text-sm"
+                className="border border-slate-300 focus:border-slate-400 focus:ring-0 text-[13px]"
               />
             </div>
 
             {/* TEAM B */}
-            <div className="space-y-2">
-              <Label htmlFor="teamB">Team B</Label>
+            <div className="space-y-1.5">
+              <Label
+                htmlFor="teamB"
+                className="text-[12px] font-medium tracking-wide"
+              >
+                Team B
+              </Label>
               <Input
                 id="teamB"
                 placeholder="Example: Kamraili"
                 value={teamB}
                 onChange={(e) => setTeamB(e.target.value)}
-                className="border border-slate-300 focus:border-slate-400 focus:ring-0 text-sm"
+                className="border border-slate-300 focus:border-slate-400 focus:ring-0 text-[13px]"
               />
             </div>
 
             {teamA &&
               teamB &&
               teamA.trim().toLowerCase() === teamB.trim().toLowerCase() && (
-                <p className="text-xs text-amber-600 md:col-span-2">
+                <p className="text-[11px] leading-snug text-amber-600 md:col-span-2">
                   Team A and Team B must be different.
                 </p>
               )}
@@ -106,6 +121,7 @@ export default function Setup() {
               active:bg-neutral-700
               disabled:opacity-40 disabled:cursor-not-allowed
               transition-all
+              text-[13px] font-medium tracking-wide
             "
           >
             Next — Toss

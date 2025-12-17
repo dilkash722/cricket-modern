@@ -33,7 +33,6 @@ export default function StepIndicator() {
     return false;
   };
 
-  // Allow only next unlocked step
   const maxStep = (() => {
     if (step5Done) return 5;
     if (step4Done) return 4;
@@ -66,9 +65,11 @@ export default function StepIndicator() {
               onClick={() => !disabled && navigate(route)}
             >
               <div className="flex flex-col items-center">
+                {/* STEP CIRCLE */}
                 <div
                   className={
-                    "w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center text-xs md:text-sm font-semibold " +
+                    "w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center " +
+                    "text-[11px] md:text-[13px] font-semibold tracking-tight " +
                     (done
                       ? "bg-green-600 text-white"
                       : active
@@ -81,9 +82,10 @@ export default function StepIndicator() {
                   {done ? "✔" : s}
                 </div>
 
+                {/* STEP LABEL */}
                 <span
                   className={
-                    "mt-1 text-[10px] md:text-xs font-medium text-center " +
+                    "mt-1 text-[10px] md:text-[11px] font-medium tracking-wide text-center leading-tight " +
                     (done
                       ? "text-green-600"
                       : active
@@ -97,6 +99,7 @@ export default function StepIndicator() {
                 </span>
               </div>
 
+              {/* CONNECTOR */}
               {s !== steps.length && (
                 <div
                   className={`hidden md:block h-[2px] ${

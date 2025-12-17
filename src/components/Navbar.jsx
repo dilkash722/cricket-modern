@@ -9,10 +9,10 @@ export default function Navbar() {
       <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
         {/* LEFT: Logo Section */}
         <div>
-          <h1 className="text-lg font-semibold tracking-tight text-slate-900">
+          <h1 className="text-[18px] font-semibold tracking-tight leading-tight text-slate-900">
             Gully Cricket Modern
           </h1>
-          <p className="text-xs text-slate-500 -mt-0.5">
+          <p className="text-[12px] font-normal tracking-wide leading-snug text-slate-500">
             Set Up Matches & Track Live Scores
           </p>
         </div>
@@ -21,8 +21,12 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           {/* User Name */}
           <div className="text-right leading-tight">
-            <p className="text-sm font-medium text-slate-900">Md Dilkash</p>
-            <p className="text-[11px] text-slate-500">Creator</p>
+            <p className="text-[14px] font-medium tracking-tight text-slate-900">
+              Md Dilkash
+            </p>
+            <p className="text-[11px] font-normal tracking-wide text-slate-500">
+              Creator
+            </p>
           </div>
 
           {/* Avatar */}
