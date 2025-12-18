@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import avatar from "../assets/avtar.jpg";
 
 export default function Navbar() {
   const location = useLocation();
@@ -31,7 +32,7 @@ export default function Navbar() {
 
           {/* Avatar */}
           <img
-            src="https://media.licdn.com/dms/image/v2/D4D03AQEldctReMxvhQ/profile-displayphoto-crop_800_800/B4DZncvjCtHsAI-/0/1760345076623?e=1767225600&v=beta&t=Xd69igqzxfoCJQRClTPXHGHGqy_3S-dojH1WoXlaMeU"
+            src={avatar}
             alt="Md Dilkash"
             className="
               w-10 h-10 rounded-full border border-slate-300

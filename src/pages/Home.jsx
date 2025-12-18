@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { PlayCircle, Info } from "lucide-react";
+import avatar from "../assets/avtar.jpg";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ export default function Home() {
       <div className="w-full flex justify-center pb-20">
         <div className="text-center">
           <img
-            src="https://media.licdn.com/dms/image/v2/D4D03AQEldctReMxvhQ/profile-displayphoto-crop_800_800/B4DZncvjCtHsAI-/0/1760345076623?e=1766016000&v=beta&t=Rpp3VhI1YAFfjhxUcpc507VJJygB60BuDgZAbRKIMGs"
+            src={avatar}
             alt="Md Dilkash"
             className="w-28 h-28 sm:w-32 sm:h-32 rounded-full mx-auto shadow-md object-cover"
           />
