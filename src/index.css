@@ -4,3 +4,24 @@
 * {
   font-family: "Poppins", sans-serif;
 }
+
+@media print {
+  /* 1. Dark background aur colors ko force karne ke liye */
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    background-color: #0a0f1e !important; /* Tera match dark background */
+    color: white !important;
+  }
+
+  /* 2. Page layout ko clean rakhne ke liye */
+  @page {
+    margin: 10mm;
+    size: auto;
+  }
+
+  /* 3. Buttons ko print se hatane ke liye (Official Report look) */
+  .print\:hidden {
+    display: none !important;
+  }
+}

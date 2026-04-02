@@ -1,19 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMatch } from "../context/MatchContext.jsx";
-
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Trophy, ArrowRight, ShieldAlert } from "lucide-react";
 
 export default function Setup() {
   const navigate = useNavigate();
@@ -22,10 +13,11 @@ export default function Setup() {
   const [teamA, setTeamA] = useState("");
   const [teamB, setTeamB] = useState("");
 
-  const canNext =
+  const isSameName =
     teamA.trim() &&
     teamB.trim() &&
-    teamA.trim().toLowerCase() !== teamB.trim().toLowerCase();
+    teamA.trim().toLowerCase() === teamB.trim().toLowerCase();
+  const canNext = teamA.trim() && teamB.trim() && !isSameName;
 
   const next = () => {
     dispatch({
@@ -33,101 +25,117 @@ export default function Setup() {
       A: teamA.trim(),
       B: teamB.trim(),
     });
-
     navigate("/toss");
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-6 space-y-4">
-      {/* PAGE HEADING */}
-      <div className="space-y-1">
-        <h2 className="text-[22px] font-semibold tracking-tight leading-tight text-slate-900">
-          Match Setup
+    <div className="w-full max-w-[1200px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
+      {/* HEADER SECTION */}
+      <div className="mb-12 text-center md:text-left">
+        <h2 className="text-4xl font-black tracking-[-0.05em] uppercase text-white">
+          Initialize{" "}
+          <span className="text-indigo-500 text-nowrap">Squads.</span>
         </h2>
-        <p className="text-[13px] leading-snug text-slate-500">
-          Create teams to start the match process.
+        <p className="text-[10px] font-black tracking-[0.3em] text-slate-500 uppercase mt-2">
+          Step 01 — Match Configuration
         </p>
       </div>
 
-      <Card className="shadow-sm border-slate-200">
-        <CardHeader className="space-y-0.5">
-          <CardTitle className="text-[15px] font-medium tracking-tight">
-            Teams
-          </CardTitle>
-          <CardDescription className="text-[11px] tracking-wide">
-            Step 1 of 5
-          </CardDescription>
-        </CardHeader>
+      <div className="grid lg:grid-cols-12 gap-8 items-start">
+        {/* MAIN CARD SECTION */}
+        <div className="lg:col-span-8 bg-white/[0.02] border border-white/5 backdrop-blur-3xl rounded-[32px] overflow-hidden shadow-2xl">
+          <div className="p-8 md:p-12 space-y-10">
+            <div className="grid md:grid-cols-2 gap-10 relative">
+              {/* VS DECORATION */}
+              <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-[#020617] border border-white/10 items-center justify-center z-10">
+                <span className="text-[10px] font-black text-indigo-500">
+                  VS
+                </span>
+              </div>
 
-        <Separator />
+              {/* TEAM A INPUT */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="h-2 w-2 rounded-full bg-indigo-500" />
+                  <Label className="text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">
+                    Primary Team
+                  </Label>
+                </div>
+                <Input
+                  placeholder="Team Alpha"
+                  value={teamA}
+                  onChange={(e) => setTeamA(e.target.value)}
+                  className="h-16 bg-white/[0.02] border-white/10 focus:border-indigo-500 focus:ring-0 rounded-2xl text-lg font-bold tracking-tight text-white placeholder:text-slate-700 transition-all"
+                />
+              </div>
 
-        <CardContent className="pt-4 space-y-4">
-          <div className="grid gap-4 md:grid-cols-2">
-            {/* TEAM A */}
-            <div className="space-y-1.5">
-              <Label
-                htmlFor="teamA"
-                className="text-[12px] font-medium tracking-wide"
-              >
-                Team A
-              </Label>
-              <Input
-                id="teamA"
-                placeholder="Example: Nikhra"
-                value={teamA}
-                onChange={(e) => setTeamA(e.target.value)}
-                className="border border-slate-300 focus:border-slate-400 focus:ring-0 text-[13px]"
-              />
+              {/* TEAM B INPUT */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="h-2 w-2 rounded-full bg-slate-700" />
+                  <Label className="text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">
+                    Opponent Team
+                  </Label>
+                </div>
+                <Input
+                  placeholder="Team Omega"
+                  value={teamB}
+                  onChange={(e) => setTeamB(e.target.value)}
+                  className="h-16 bg-white/[0.02] border-white/10 focus:border-indigo-500 focus:ring-0 rounded-2xl text-lg font-bold tracking-tight text-white placeholder:text-slate-700 transition-all"
+                />
+              </div>
             </div>
 
-            {/* TEAM B */}
-            <div className="space-y-1.5">
-              <Label
-                htmlFor="teamB"
-                className="text-[12px] font-medium tracking-wide"
-              >
-                Team B
-              </Label>
-              <Input
-                id="teamB"
-                placeholder="Example: Kamraili"
-                value={teamB}
-                onChange={(e) => setTeamB(e.target.value)}
-                className="border border-slate-300 focus:border-slate-400 focus:ring-0 text-[13px]"
-              />
-            </div>
-
-            {teamA &&
-              teamB &&
-              teamA.trim().toLowerCase() === teamB.trim().toLowerCase() && (
-                <p className="text-[11px] leading-snug text-amber-600 md:col-span-2">
-                  Team A and Team B must be different.
+            {/* ERROR MESSAGE */}
+            {isSameName && (
+              <div className="flex items-center gap-3 p-4 rounded-2xl bg-red-500/5 border border-red-500/10 animate-in fade-in zoom-in-95">
+                <ShieldAlert className="h-4 w-4 text-red-500" />
+                <p className="text-[10px] font-black uppercase tracking-widest text-red-400">
+                  Conflict: Names must be unique.
                 </p>
-              )}
+              </div>
+            )}
+
+            {/* ACTION BUTTON */}
+            <div className="pt-6 border-t border-white/5 flex justify-end">
+              <Button
+                disabled={!canNext}
+                onClick={next}
+                className="h-14 px-10 bg-white text-black hover:bg-indigo-600 hover:text-white rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] transition-all disabled:opacity-20 group"
+              >
+                Proceed to Toss
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
           </div>
-        </CardContent>
+        </div>
 
-        <Separator />
+        {/* SIDE INFO SECTION (Corporate Feel) */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="p-8 rounded-[32px] bg-indigo-600/5 border border-indigo-500/10">
+            <Trophy className="text-indigo-500 h-6 w-6 mb-4" />
+            <h4 className="text-sm font-black text-white uppercase tracking-tight mb-2">
+              Match Protocol
+            </h4>
+            <p className="text-xs text-slate-500 leading-relaxed font-medium">
+              Ensure team names are official for accurate record keeping. Names
+              will be locked once the toss is initialized.
+            </p>
+          </div>
 
-        <CardFooter className="flex justify-end">
-          <Button
-            size="sm"
-            disabled={!canNext}
-            onClick={next}
-            className="
-              bg-neutral-900 text-white
-              border border-neutral-800
-              hover:bg-neutral-800
-              active:bg-neutral-700
-              disabled:opacity-40 disabled:cursor-not-allowed
-              transition-all
-              text-[13px] font-medium tracking-wide
-            "
-          >
-            Next — Toss
-          </Button>
-        </CardFooter>
-      </Card>
+          <div className="p-6 rounded-[32px] bg-white/[0.02] border border-white/5 flex items-center justify-between group cursor-default">
+            <div>
+              <p className="text-[9px] font-black text-slate-600 uppercase tracking-widest">
+                Engine Status
+              </p>
+              <p className="text-xs font-bold text-emerald-500 uppercase mt-1">
+                Ready to Sync
+              </p>
+            </div>
+            <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
