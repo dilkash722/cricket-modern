@@ -60,7 +60,7 @@ export default function Toss() {
       <div className="mb-10 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
           <h2 className="text-4xl font-black tracking-[-0.05em] uppercase text-white">
-            Coin <span className="text-indigo-500">Arbitration.</span>
+            Coin <span className="text-indigo-500">Arbitration</span>
           </h2>
           <p className="text-[10px] font-black tracking-[0.3em] text-slate-500 uppercase mt-2">
             Step 02 — The Toss Phase

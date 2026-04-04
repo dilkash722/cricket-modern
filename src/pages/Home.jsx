@@ -32,20 +32,20 @@ export default function Home() {
         </div>
 
         {/* Hero Title */}
-        <div className="mb-10 space-y-2">
-          <h1 className="text-7xl md:text-[140px] font-black tracking-[-0.08em] leading-[0.8] uppercase text-white drop-shadow-2xl">
+        <div className="mb-9 space-y-2">
+          <h1 className="text-7xl md:text-[140px] font-black tracking-tight leading-[0.82] uppercase text-white drop-shadow-2xl">
             CRICKET
           </h1>
-          <h1 className="text-7xl md:text-[140px] font-black tracking-[-0.08em] leading-[0.8] uppercase bg-clip-text text-transparent bg-gradient-to-b from-slate-100 to-slate-600">
+          <h1 className="text-7xl md:text-[140px] font-black tracking-tight leading-[0.82] uppercase bg-clip-text text-transparent bg-gradient-to-b from-slate-100 to-slate-600">
             MODERN
           </h1>
         </div>
 
-        <div className="max-w-xl mb-16 space-y-6">
+        <div className="max-w-xl mb-12 space-y-4">
           {/* MAIN TEXT */}
-          <p className="text-slate-500 text-lg md:text-xl font-medium leading-relaxed tracking-tight">
+          <p className="text-slate-400 text-base md:text-xl font-medium leading-[1.5] md:leading-[1.6] tracking-tight">
             Professional scoring for elite local matches. Built for{" "}
-            <span className="text-white font-bold">
+            <span className="text-white font-semibold">
               Nikhra Yuva Cricket Club
             </span>{" "}
             to manage matches with precision.

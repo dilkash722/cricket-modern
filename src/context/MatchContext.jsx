@@ -303,9 +303,17 @@ function reducer(state, action) {
     // -------------------------------
     case "END_INNINGS": {
       if (action.prepareSecond) {
-        // save first innings snapshot
+        // decide next teams properly
+        const newBattingTeam =
+          state.battingTeam === state.teamA ? state.teamB : state.teamA;
+
+        const newBowlingTeam =
+          state.battingTeam === state.teamA ? state.teamA : state.teamB;
+
         return {
           ...state,
+
+          // SAVE FIRST INNINGS DATA
           firstInningsTotal: state.runs,
           firstInningsBatsmen: state.batsmenStats,
           firstInningsBowlers: state.bowlerStats,
@@ -314,25 +322,30 @@ function reducer(state, action) {
           firstInningsBalls: state.balls,
           firstInningsWickets: state.wickets,
 
+          // RESET FOR SECOND INNINGS
           inningsNumber: 2,
           matchStarted: false,
 
           runs: 0,
           wickets: 0,
           balls: 0,
+
           striker: "",
           nonStriker: "",
           batsmenStats: {},
+
           bowlerStats: {},
+          currentBowler: "",
+
           ballLog: [],
           fallOfWickets: [],
 
+          // TARGET SET
           target: state.runs + 1,
 
-          battingTeam:
-            state.battingTeam === state.teamA ? state.teamB : state.teamA,
-          bowlingTeam:
-            state.bowlingTeam === state.teamA ? state.teamA : state.teamB,
+          // TEAM SWAP (FIXED)
+          battingTeam: newBattingTeam,
+          bowlingTeam: newBowlingTeam,
         };
       }
 

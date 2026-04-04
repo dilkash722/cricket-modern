@@ -34,19 +34,19 @@ export default function StepIndicator() {
   const content = HEADER_CONTENT[currentPath] || HEADER_CONTENT["/setup"];
 
   return (
-    <div className="w-full pt-16 pb-12 flex flex-col items-center justify-center animate-in fade-in duration-1000">
-      {/* MINIMAL PHASE INDICATOR */}
-      <span className="text-[10px] font-black uppercase tracking-[0.5em] text-indigo-500/40 mb-3 ml-2">
+    <div className="w-full py-10 flex flex-col items-center text-center">
+      {/* Phase */}
+      <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-indigo-400/60 mb-2">
         Phase {content.phase}
       </span>
 
-      {/* ELITE CLEAN HEADING */}
-      <h2 className="text-4xl md:text-7xl font-black tracking-[-0.07em] uppercase text-white leading-none mb-4">
+      {/* Title */}
+      <h2 className="text-2xl sm:text-4xl md:text-6xl font-black tracking-[-0.05em] uppercase text-white leading-tight">
         {content.title}
       </h2>
 
-      {/* SUB-TEXT */}
-      <p className="text-[10px] md:text-[11px] font-bold text-slate-700 uppercase tracking-[0.3em] max-w-sm">
+      {/* Description */}
+      <p className="mt-3 text-[11px] sm:text-xs font-medium text-slate-400 uppercase tracking-[0.25em] max-w-md">
         {content.desc}
       </p>
     </div>

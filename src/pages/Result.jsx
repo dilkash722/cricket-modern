@@ -5,16 +5,30 @@ import { useNavigate } from "react-router-dom";
 import { Trophy, Users, Target, RotateCcw, TrendingUp } from "lucide-react";
 
 // --- Styled Sub-Components ---
-const SubHeader = ({ icon, title, className = "" }) => (
-  <div className={`flex items-center gap-2 mb-4 mt-6 first:mt-0 ${className}`}>
-    <div className="p-1.5 bg-indigo-500/10 rounded-lg border border-indigo-500/20 text-indigo-400">
-      {React.cloneElement(icon, { size: 12 })}
+const SubHeader = ({ icon, title, className = "" }) => {
+  const parts = title.split("/");
+
+  return (
+    <div
+      className={`flex items-center gap-2 mb-4 mt-6 first:mt-0 ${className}`}
+    >
+      <div className="p-1.5 bg-indigo-500/10 rounded-lg border border-indigo-500/20 text-indigo-400">
+        {React.cloneElement(icon, { size: 14 })}
+      </div>
+
+      <h3 className="text-xs md:text-sm font-semibold uppercase tracking-wide text-slate-300 flex items-center gap-1">
+        <span>{parts[0]}</span>
+
+        {parts[1] && (
+          <>
+            <span className="text-slate-500 font-normal px-1">/</span>
+            <span>{parts[1]}</span>
+          </>
+        )}
+      </h3>
     </div>
-    <h3 className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
-      {title}
-    </h3>
-  </div>
-);
+  );
+};
 
 const InningsReport = ({ team, score, wickets, overs, rr, num, children }) => (
   <div className="bg-[#0A0F1E]/60 border border-white/5 rounded-[24px] md:rounded-[32px] p-5 md:p-10 backdrop-blur-xl relative overflow-hidden group transition-all">
@@ -119,32 +133,40 @@ export default function Result() {
       {/* --- RESPONSIVE WINNING BADGE --- */}
       <div className="relative overflow-hidden rounded-[24px] md:rounded-[32px] bg-[#0A0F1E] border border-white/[0.03] p-6 md:p-12 text-center mb-6 md:mb-8 shadow-xl">
         <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/[0.02] to-transparent pointer-events-none"></div>
+
         <div className="relative z-10 flex flex-col items-center">
+          {/* Top Label */}
           <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
             <div className="h-px w-6 md:w-8 bg-slate-800"></div>
-            <span className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.4em] text-slate-500">
+
+            <span className="text-xs md:text-sm font-semibold uppercase tracking-wider text-slate-400">
               Match Result
             </span>
+
             <div className="h-px w-6 md:w-8 bg-slate-800"></div>
           </div>
 
+          {/* Winner */}
           <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-4 md:mb-6">
             <Trophy
               className="text-yellow-500 animate-pulse hidden sm:block"
-              size={24}
+              size={26}
             />
-            <h1 className="text-3xl md:text-6xl lg:text-7xl font-black tracking-tighter uppercase text-white leading-none px-2 break-words max-w-full">
+
+            <h1 className="text-3xl md:text-6xl lg:text-7xl font-bold tracking-tight uppercase text-white leading-none px-2 break-words max-w-full">
               {winnerText}
-              <span className="text-indigo-600">.</span>
             </h1>
-            <div className="px-2 py-0.5 md:px-3 md:py-1 rounded bg-indigo-600 text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white shadow-lg">
+
+            <div className="px-2 py-0.5 md:px-3 md:py-1 rounded bg-indigo-600 text-xs md:text-sm font-semibold uppercase tracking-wide text-white shadow-lg">
               Winner
             </div>
           </div>
 
+          {/* Sub Text */}
           <div className="inline-flex items-center gap-2 md:gap-3 px-4 py-1.5 md:px-6 md:py-2 rounded-lg md:rounded-xl bg-white/[0.02] border border-white/[0.05] backdrop-blur-md">
             <div className="h-1 w-1 md:h-1.5 md:w-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-            <p className="text-[10px] md:text-sm font-bold text-slate-300 uppercase tracking-[0.1em] md:tracking-[0.3em]">
+
+            <p className="text-xs md:text-sm font-medium text-slate-300 uppercase tracking-wide">
               {subWinnerText}
             </p>
           </div>
@@ -184,7 +206,7 @@ export default function Result() {
                 <td className="px-3 md:px-4 py-2.5 md:py-3 text-slate-600">
                   {firstInningsBatsmen[name].sixes}
                 </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 font-bold text-slate-700 italic">
+                <td className="px-3 md:px-4 py-2.5 md:py-3 font-bold text-slate-700">
                   {(firstInningsBatsmen[name].balls > 0
                     ? (firstInningsBatsmen[name].runs /
                         firstInningsBatsmen[name].balls) *
@@ -253,7 +275,7 @@ export default function Result() {
                 <td className="px-3 md:px-4 py-2.5 md:py-3 text-slate-600">
                   {batsmenStats[name].sixes}
                 </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 font-bold text-slate-700 italic">
+                <td className="px-3 md:px-4 py-2.5 md:py-3 font-bold text-slate-700">
                   {(batsmenStats[name].balls > 0
                     ? (batsmenStats[name].runs / batsmenStats[name].balls) * 100
                     : 0
@@ -300,25 +322,6 @@ export default function Result() {
             )),
           )}
         </InningsReport>
-      </div>
-
-      {/* --- RESPONSIVE ACTIONS --- */}
-      <div className="mt-10 md:mt-16 flex flex-col sm:flex-row gap-4 justify-center items-center print:hidden">
-        <Button
-          onClick={() => navigate("/")}
-          className="w-full sm:w-auto h-14 px-8 md:px-10 bg-white text-black hover:bg-indigo-600 hover:text-white font-black rounded-xl md:rounded-2xl transition-all group"
-        >
-          <RotateCcw className="mr-2 h-4 w-4 group-hover:rotate-180 transition-transform duration-500" />
-          NEW MATCH
-        </Button>
-        <Button
-          onClick={() => window.print()}
-          variant="outline"
-          className="w-full sm:w-auto h-14 px-8 md:px-10 border-white/10 bg-white/5 text-white hover:bg-white/20 font-black rounded-xl md:rounded-2xl backdrop-blur-md"
-        >
-          <TrendingUp className="mr-2 h-4 w-4" />
-          GET PDF REPORT
-        </Button>
       </div>
     </div>
   );
