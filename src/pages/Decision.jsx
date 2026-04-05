@@ -54,16 +54,6 @@ export default function Decision() {
 
   return (
     <div className="w-full max-w-[1000px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20">
-      {/* HEADER SECTION */}
-      <div className="mb-12 text-center md:text-left">
-        <h2 className="text-4xl font-black tracking-[-0.05em] uppercase text-white">
-          Final <span className="text-indigo-500">Parameters</span>
-        </h2>
-        <p className="text-[10px] font-black tracking-[0.3em] text-slate-500 uppercase mt-2">
-          Step 03 — Define Match Mechanics
-        </p>
-      </div>
-
       <div className="grid lg:grid-cols-12 gap-8 items-start">
         {/* LEFT: CONFIGURATION PANEL */}
         <div className="lg:col-span-8 space-y-6">

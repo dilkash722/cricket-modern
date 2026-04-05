@@ -22,8 +22,6 @@ const HEADER_CONTENT = {
     phase: "04",
   },
   "/result": {
-    title: "Match Summary",
-    desc: "Comprehensive result data",
     phase: "05",
   },
 };
@@ -32,6 +30,7 @@ export default function StepIndicator() {
   const location = useLocation();
   const currentPath = location.pathname;
   const content = HEADER_CONTENT[currentPath] || HEADER_CONTENT["/setup"];
+  if (currentPath === "/result") return null;
 
   return (
     <div className="w-full py-10 flex flex-col items-center text-center">

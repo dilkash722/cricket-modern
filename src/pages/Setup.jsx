@@ -30,17 +30,6 @@ export default function Setup() {
 
   return (
     <div className="w-full max-w-[1200px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
-      {/* HEADER */}
-      <div className="mb-12 text-center md:text-left">
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight uppercase text-white">
-          Initialize <span className="text-indigo-500 text-nowrap">Squads</span>
-        </h2>
-
-        <p className="text-xs md:text-sm font-medium tracking-wide text-slate-400 uppercase mt-2">
-          Step 01 • Match Configuration
-        </p>
-      </div>
-
       <div className="grid lg:grid-cols-12 gap-8 items-start">
         {/* MAIN CARD */}
         <div className="lg:col-span-8 bg-white/[0.02] border border-white/5 backdrop-blur-3xl rounded-[32px] overflow-hidden shadow-2xl">

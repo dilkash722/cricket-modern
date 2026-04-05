@@ -364,8 +364,11 @@ function reducer(state, action) {
       return {
         ...state,
         matchStarted: true,
+        matchFinished: false, // ADD THIS
+
         striker: action.striker,
         nonStriker: action.nonStriker,
+
         batsmenStats: {
           [action.striker]: {
             runs: 0,
@@ -382,7 +385,9 @@ function reducer(state, action) {
             outBy: null,
           },
         },
+
         currentBowler: action.currentBowler,
+
         bowlerStats: {
           [action.currentBowler]: {
             balls: 0,
@@ -393,7 +398,6 @@ function reducer(state, action) {
           },
         },
       };
-
     // -------------------------------
     // END MATCH (RESULT)
     // -------------------------------

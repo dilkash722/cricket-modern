@@ -58,14 +58,6 @@ export default function Toss() {
     <div className="w-full max-w-[1000px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20">
       {/* HEADER */}
       <div className="mb-10 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <h2 className="text-4xl font-black tracking-[-0.05em] uppercase text-white">
-            Coin <span className="text-indigo-500">Arbitration</span>
-          </h2>
-          <p className="text-[10px] font-black tracking-[0.3em] text-slate-500 uppercase mt-2">
-            Step 02 — The Toss Phase
-          </p>
-        </div>
         {winner && (
           <div className="px-6 py-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-3 animate-bounce-slow">
             <Trophy className="h-4 w-4 text-emerald-500" />

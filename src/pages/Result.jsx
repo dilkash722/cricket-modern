@@ -1,10 +1,18 @@
 import React from "react";
 import { useMatch } from "../context/MatchContext.jsx";
 import { Button } from "@/components/ui/button";
+import StatBox from "../components/scoreboard/StatBox";
 import { useNavigate } from "react-router-dom";
-import { Trophy, Users, Target, RotateCcw, TrendingUp } from "lucide-react";
+import {
+  Trophy,
+  Users,
+  Target,
+  RotateCcw,
+  ShieldCheck,
+  Skull,
+} from "lucide-react";
 
-// --- Styled Sub-Components ---
+// --- Sub Components ---
 const SubHeader = ({ icon, title, className = "" }) => {
   const parts = title.split("/");
 
@@ -30,34 +38,39 @@ const SubHeader = ({ icon, title, className = "" }) => {
   );
 };
 
+const Separator = () => (
+  <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-8"></div>
+);
+
 const InningsReport = ({ team, score, wickets, overs, rr, num, children }) => (
-  <div className="bg-[#0A0F1E]/60 border border-white/5 rounded-[24px] md:rounded-[32px] p-5 md:p-10 backdrop-blur-xl relative overflow-hidden group transition-all">
-    {/* Background Decorative Number - Hidden on small mobile to save space */}
-    <div className="absolute top-0 right-0 p-10 text-white/[0.02] font-black text-[8rem] md:text-[12rem] leading-none select-none pointer-events-none group-hover:text-indigo-500/[0.04] transition-colors hidden sm:block">
+  <div className="bg-[#0A0F1E]/60 border border-white/5 rounded-[24px] md:rounded-[32px] p-6 md:p-10 backdrop-blur-xl relative overflow-hidden">
+    <div className="absolute top-0 right-0 p-10 text-white/[0.02] font-black text-[8rem] md:text-[12rem] leading-none hidden sm:block">
       {num}
     </div>
 
     <div className="relative z-10">
-      <div className="flex flex-row justify-between items-end mb-6 md:mb-10 border-b border-white/5 pb-6 md:pb-8">
-        <div className="max-w-[60%]">
-          <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-indigo-500/10 border border-indigo-500/20 text-[8px] font-black uppercase tracking-widest text-indigo-400 mb-2 md:mb-3">
+      <div className="flex justify-between items-end mb-8 border-b border-white/5 pb-6">
+        <div>
+          <div className="text-[10px] font-semibold uppercase tracking-wide text-indigo-400 mb-2">
             Innings {num}
           </div>
-          <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter leading-none truncate">
+          <h2 className="text-2xl md:text-5xl font-extrabold text-white uppercase tracking-tight">
             {team}
           </h2>
         </div>
+
         <div className="text-right">
-          <div className="text-3xl md:text-5xl font-black text-white leading-none tracking-tighter">
+          <div className="text-3xl md:text-6xl font-extrabold text-white">
             {score}
             <span className="text-indigo-600">/</span>
             <span className="text-slate-500">{wickets}</span>
           </div>
-          <p className="text-[8px] md:text-[10px] font-bold text-slate-500 uppercase tracking-[0.1em] md:tracking-[0.2em] mt-2 bg-white/5 py-1 px-2 md:px-3 rounded-full inline-block">
+          <p className="text-xs text-slate-400 mt-2">
             {overs} Ov • {rr} RR
           </p>
         </div>
       </div>
+
       {children}
     </div>
   </div>
@@ -66,6 +79,7 @@ const InningsReport = ({ team, score, wickets, overs, rr, num, children }) => (
 export default function Result() {
   const { state } = useMatch();
   const navigate = useNavigate();
+
   const {
     teamA,
     teamB,
@@ -82,54 +96,45 @@ export default function Result() {
   } = state;
 
   const convertBalls = (b) => `${Math.floor(b / 6)}.${b % 6}`;
-  const firstInningsOvers =
+
+  const firstOvers =
     firstInningsBalls != null ? convertBalls(firstInningsBalls) : "-";
-  const secondInningsOvers = convertBalls(balls);
+  const secondOvers = convertBalls(balls);
 
   const getRR = (runs, oversText) => {
-    if (!oversText || oversText === "-" || oversText === "0.0") return "0.00";
+    if (!oversText || oversText === "-") return "0.00";
     const [ov, ball] = oversText.split(".");
     const o = Number(ov) + Number(ball) / 6;
     return o > 0 ? (runs / o).toFixed(2) : "0.00";
   };
 
-  const RR1 = getRR(firstInningsTotal, firstInningsOvers);
-  const RR2 = getRR(runs, secondInningsOvers);
+  const RR1 = getRR(firstInningsTotal, firstOvers);
+  const RR2 = getRR(runs, secondOvers);
 
   let winnerText = "Match Tied";
   let subWinnerText = "Scores are level";
-  if (firstInningsTotal != null && runs != null) {
-    if (runs > firstInningsTotal) {
-      winnerText = teamB;
-      subWinnerText = `Won by ${10 - (fallOfWickets?.length || 0)} Wickets`;
-    } else if (runs < firstInningsTotal) {
-      winnerText = teamA;
-      subWinnerText = `Won by ${firstInningsTotal - runs} Runs`;
-    }
+
+  if (runs > firstInningsTotal) {
+    winnerText = teamB;
+    subWinnerText = `Won by ${10 - (fallOfWickets?.length || 0)} Wickets`;
+  } else if (runs < firstInningsTotal) {
+    winnerText = teamA;
+    subWinnerText = `Won by ${firstInningsTotal - runs} Runs`;
   }
 
-  const renderTable = (headers, rows) => (
-    <div className="w-full overflow-x-auto rounded-xl border border-white/5 bg-black/20 backdrop-blur-sm scrollbar-hide">
-      <table className="w-full text-left text-[10px] md:text-[11px] min-w-[300px]">
-        <thead>
-          <tr className="border-b border-white/5 bg-white/[0.03]">
-            {headers.map((h, i) => (
-              <th
-                key={i}
-                className={`px-3 md:px-4 py-2.5 md:py-3 font-black uppercase text-slate-500 tracking-tighter ${i === 0 ? "sticky left-0 bg-[#0A0F1E] z-10" : ""}`}
-              >
-                {h}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-white/5">{rows}</tbody>
-      </table>
-    </div>
-  );
+  const StatusBadge = ({ outBy }) =>
+    outBy ? (
+      <span className="text-[10px] px-2 py-1 bg-rose-500/10 text-rose-400 border border-rose-500/20 rounded-3xl">
+        OUT
+      </span>
+    ) : (
+      <span className="text-[10px] px-2 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-3xl">
+        NOT
+      </span>
+    );
 
   return (
-    <div className="w-full max-w-[1300px] mx-auto pb-20 animate-in fade-in slide-in-from-bottom-6 duration-1000 px-4 mt-4 md:mt-8">
+    <div className="w-full max-w-[1300px] mx-auto pb-20 px-4 mt-4 md:mt-8">
       {/* --- RESPONSIVE WINNING BADGE --- */}
       <div className="relative overflow-hidden rounded-[24px] md:rounded-[32px] bg-[#0A0F1E] border border-white/[0.03] p-6 md:p-12 text-center mb-6 md:mb-8 shadow-xl">
         <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/[0.02] to-transparent pointer-events-none"></div>
@@ -173,154 +178,136 @@ export default function Result() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-        {/* --- INNINGS 01 --- */}
+      {/* INNINGS */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* FIRST */}
         <InningsReport
           team={teamA}
           score={firstInningsTotal}
           wickets={firstInningsWickets}
-          overs={firstInningsOvers}
+          overs={firstOvers}
           rr={RR1}
           num="01"
         >
           <SubHeader icon={<Users />} title="Batting" />
-          {renderTable(
-            ["Player", "R", "B", "4s", "6s", "SR"],
-            Object.keys(firstInningsBatsmen || {}).map((name) => (
-              <tr
-                key={name}
-                className="hover:bg-white/[0.02] border-b border-white/[0.02] last:border-0"
-              >
-                <td className="px-3 md:px-4 py-2.5 md:py-3 font-bold text-white uppercase text-[10px] md:text-[11px] sticky left-0 bg-[#111625] md:bg-transparent">
-                  {name}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 font-black text-indigo-400">
-                  {firstInningsBatsmen[name].runs}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 text-slate-500">
-                  {firstInningsBatsmen[name].balls}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 text-slate-600">
-                  {firstInningsBatsmen[name].fours}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 text-slate-600">
-                  {firstInningsBatsmen[name].sixes}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 font-bold text-slate-700">
-                  {(firstInningsBatsmen[name].balls > 0
-                    ? (firstInningsBatsmen[name].runs /
-                        firstInningsBatsmen[name].balls) *
-                      100
-                    : 0
-                  ).toFixed(1)}
-                </td>
-              </tr>
-            )),
-          )}
+
+          <div className="space-y-3">
+            {Object.entries(firstInningsBatsmen || {}).map(([name, s]) => (
+              <div key={name} className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-semibold text-white">
+                    {name}
+                  </span>
+                  <StatusBadge outBy={s.outBy} />
+                </div>
+
+                <div className="grid grid-cols-5 gap-2">
+                  <StatBox label="R" val={s.runs} />
+                  <StatBox label="B" val={s.balls} />
+                  <StatBox label="4s" val={s.fours} />
+                  <StatBox label="6s" val={s.sixes} />
+                  <StatBox
+                    label="SR"
+                    val={
+                      s.balls > 0
+                        ? ((s.runs / s.balls) * 100).toFixed(1)
+                        : "0.0"
+                    }
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <Separator />
+
           <SubHeader icon={<Target />} title="Bowling" />
-          {renderTable(
-            ["Bowler", "O", "R", "W", "Eco"],
-            Object.keys(firstInningsBowlers || {}).map((name) => (
-              <tr key={name} className="hover:bg-white/[0.02]">
-                <td className="px-3 md:px-4 py-2.5 md:py-3 font-bold text-white uppercase sticky left-0 bg-[#111625] md:bg-transparent">
-                  {name}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 text-slate-500">
-                  {convertBalls(firstInningsBowlers[name].balls)}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 text-slate-600">
-                  {firstInningsBowlers[name].runs}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 font-black text-indigo-400">
-                  {firstInningsBowlers[name].wickets}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 font-bold text-slate-700">
-                  {(firstInningsBowlers[name].balls > 0
-                    ? firstInningsBowlers[name].runs /
-                      (firstInningsBowlers[name].balls / 6)
-                    : 0
-                  ).toFixed(1)}
-                </td>
-              </tr>
-            )),
-          )}
+
+          <div className="space-y-3">
+            {Object.entries(firstInningsBowlers || {}).map(([name, s]) => (
+              <div key={name} className="flex justify-between items-center">
+                <span className="text-sm font-semibold text-white">{name}</span>
+
+                <div className="grid grid-cols-5 gap-2">
+                  <StatBox label="O" val={convertBalls(s.balls)} />
+                  <StatBox label="M" val={0} />
+                  <StatBox label="R" val={s.runs} />
+                  <StatBox label="W" val={s.wickets} />
+                  <StatBox
+                    label="ER"
+                    val={
+                      s.balls > 0 ? (s.runs / (s.balls / 6)).toFixed(2) : "0.00"
+                    }
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </InningsReport>
 
-        {/* --- INNINGS 02 --- */}
+        {/* SECOND */}
         <InningsReport
           team={teamB}
           score={runs}
-          wickets={fallOfWickets?.length}
-          overs={secondInningsOvers}
+          wickets={fallOfWickets?.length || 0}
+          overs={secondOvers}
           rr={RR2}
           num="02"
         >
           <SubHeader icon={<Users />} title="Batting" />
-          {renderTable(
-            ["Player", "R", "B", "4s", "6s", "SR"],
-            Object.keys(batsmenStats || {}).map((name) => (
-              <tr key={name} className="hover:bg-white/[0.02]">
-                <td className="px-3 md:px-4 py-2.5 md:py-3 font-bold text-white uppercase text-[10px] md:text-[11px] sticky left-0 bg-[#111625] md:bg-transparent">
-                  {name}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 font-black text-indigo-400">
-                  {batsmenStats[name].runs}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 text-slate-500">
-                  {batsmenStats[name].balls}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 text-slate-600">
-                  {batsmenStats[name].fours}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 text-slate-600">
-                  {batsmenStats[name].sixes}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 font-bold text-slate-700">
-                  {(batsmenStats[name].balls > 0
-                    ? (batsmenStats[name].runs / batsmenStats[name].balls) * 100
-                    : 0
-                  ).toFixed(1)}
-                </td>
-              </tr>
-            )),
-          )}
+
+          <div className="space-y-3">
+            {Object.entries(batsmenStats || {}).map(([name, s]) => (
+              <div key={name} className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-semibold text-white">
+                    {name}
+                  </span>
+                  <StatusBadge outBy={s.outBy} />
+                </div>
+
+                <div className="grid grid-cols-5 gap-2">
+                  <StatBox label="R" val={s.runs} />
+                  <StatBox label="B" val={s.balls} />
+                  <StatBox label="4s" val={s.fours} />
+                  <StatBox label="6s" val={s.sixes} />
+                  <StatBox
+                    label="SR"
+                    val={
+                      s.balls > 0
+                        ? ((s.runs / s.balls) * 100).toFixed(1)
+                        : "0.0"
+                    }
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <Separator />
+
           <SubHeader icon={<Target />} title="Bowling" />
-          {renderTable(
-            ["Bowler", "O", "R", "W", "Eco"],
-            Object.keys(bowlerStats || {}).map((name) => (
-              <tr key={name} className="hover:bg-white/[0.02]">
-                <td className="px-3 md:px-4 py-2.5 md:py-3 font-bold text-white uppercase sticky left-0 bg-[#111625] md:bg-transparent">
-                  {name}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 text-slate-500">
-                  {convertBalls(
-                    bowlerStats[name].balls ||
-                      bowlerStats[name].ballsBowled ||
-                      0,
-                  )}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 text-slate-600">
-                  {bowlerStats[name].runs ||
-                    bowlerStats[name].runsConceded ||
-                    0}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 font-black text-indigo-400">
-                  {bowlerStats[name].wickets || 0}
-                </td>
-                <td className="px-3 md:px-4 py-2.5 md:py-3 font-bold text-slate-700">
-                  {((bowlerStats[name].balls || bowlerStats[name].ballsBowled) >
-                  0
-                    ? (bowlerStats[name].runs ||
-                        bowlerStats[name].runsConceded) /
-                      ((bowlerStats[name].balls ||
-                        bowlerStats[name].ballsBowled) /
-                        6)
-                    : 0
-                  ).toFixed(1)}
-                </td>
-              </tr>
-            )),
-          )}
+
+          <div className="space-y-3">
+            {Object.entries(bowlerStats || {}).map(([name, s]) => (
+              <div key={name} className="flex justify-between items-center">
+                <span className="text-sm font-semibold text-white">{name}</span>
+
+                <div className="grid grid-cols-5 gap-2">
+                  <StatBox label="O" val={convertBalls(s.balls)} />
+                  <StatBox label="M" val={0} />
+                  <StatBox label="R" val={s.runs} />
+                  <StatBox label="W" val={s.wickets} />
+                  <StatBox
+                    label="EC"
+                    val={
+                      s.balls > 0 ? (s.runs / (s.balls / 6)).toFixed(2) : "0.00"
+                    }
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </InningsReport>
       </div>
     </div>

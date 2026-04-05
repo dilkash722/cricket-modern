@@ -31,12 +31,8 @@ export default function SetupScreen({
             </div>
 
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight uppercase">
-              Match <br /> Analytics
+              Match Analytics
             </h2>
-
-            <p className="mt-3 text-xs text-indigo-100/80 font-medium uppercase tracking-[0.25em]">
-              Official Scoring Interface
-            </p>
           </div>
 
           <div className="relative z-10 text-[11px] font-semibold opacity-70 uppercase tracking-[0.2em] mt-6">
@@ -80,16 +76,27 @@ export default function SetupScreen({
           {/* BUTTON */}
           <Button
             onClick={() => {
+              const striker = setup.striker.trim();
+              const nonStriker = setup.nonStriker.trim();
+              const bowler = setup.bowler.trim();
+
+              if (!striker || !nonStriker || !bowler) return;
+
               dispatch({
-                type: "START_MATCH",
-                striker: setup.striker,
-                nonStriker: setup.nonStriker,
-                currentBowler: setup.bowler,
+                type:
+                  inningsNumber === 2 ? "START_SECOND_INNINGS" : "START_MATCH",
+                striker,
+                nonStriker,
+                currentBowler: bowler,
               });
 
               navigate("/scoreboard");
             }}
-            disabled={!setup.striker || !setup.nonStriker || !setup.bowler}
+            disabled={
+              !setup.striker.trim() ||
+              !setup.nonStriker.trim() ||
+              !setup.bowler.trim()
+            }
             className="
     w-full h-14 
     bg-white text-slate-900 
