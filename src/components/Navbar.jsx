@@ -18,12 +18,16 @@ export default function Navbar() {
           </div>
 
           <div className="flex flex-col">
-            <h1 className="text-base md:text-lg font-bold tracking-tight leading-none text-white uppercase">
-              NIKHRA CRICKET
+            <h1 className="text-lg md:text-xl font-extrabold tracking-tight leading-none text-white">
+              Nikhra <span className="text-indigo-400">Cricket</span>
             </h1>
 
-            <p className="text-xs font-medium tracking-wide text-slate-400 uppercase mt-1">
-              Live Engine
+            <p className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold tracking-[0.18em] text-slate-400 uppercase mt-1.5">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span>
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-indigo-500"></span>
+              </span>
+              Live Cricket Score
             </p>
           </div>
         </div>

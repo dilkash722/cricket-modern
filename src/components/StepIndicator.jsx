@@ -33,19 +33,23 @@ export default function StepIndicator() {
   if (currentPath === "/result") return null;
 
   return (
-    <div className="w-full py-10 flex flex-col items-center text-center">
+    <div className="w-full py-6 sm:py-8 flex flex-col items-center text-center">
       {/* Phase */}
-      <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-indigo-400/60 mb-2">
-        Phase {content.phase}
-      </span>
+      <div className="flex items-center gap-2 mb-3">
+        <span className="h-px w-4 bg-indigo-500/40" />
+        <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-indigo-400/70">
+          Phase {content.phase}
+        </span>
+        <span className="h-px w-4 bg-indigo-500/40" />
+      </div>
 
       {/* Title */}
-      <h2 className="text-2xl sm:text-4xl md:text-6xl font-black tracking-[-0.05em] uppercase text-white leading-tight">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white leading-tight">
         {content.title}
       </h2>
 
       {/* Description */}
-      <p className="mt-3 text-[11px] sm:text-xs font-medium text-slate-400 uppercase tracking-[0.25em] max-w-md">
+      <p className="mt-2 text-xs sm:text-sm font-medium text-slate-400 tracking-wide max-w-md">
         {content.desc}
       </p>
     </div>

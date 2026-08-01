@@ -21,7 +21,6 @@ export default function ScoreboardPage() {
     totalBalls,
   } = useScoreboard();
 
-  // setup only before match start
   if (!state.matchStarted && !state.matchFinished) {
     return (
       <SetupScreen
@@ -33,18 +32,17 @@ export default function ScoreboardPage() {
     );
   }
 
-  // match end → kuch render mat karo
   if (state.matchFinished) return null;
 
   return (
-    <div className="w-full max-w-[1300px] mx-auto pb-24 px-4 pt-8">
+    <div className="w-full max-w-[1300px] mx-auto pb-8 sm:pb-12">
       <HeaderScoreboard
         state={state}
         oversText={oversText}
         totalBalls={totalBalls}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10">
         <div className="lg:col-span-2">
           <BattingUnit
             strikerName={state.striker}

@@ -8,22 +8,19 @@ import {
   Swords,
   Activity,
   Target,
-  History,
   Zap,
   ChevronRight,
   UserPlus,
-  ShieldCheck,
-  TrendingUp,
 } from "lucide-react";
 
 // --- PROFESSIONAL STAT MINI COMPONENT ---
 const StatBox = ({ label, val, highlight, color = "text-slate-400" }) => (
-  <div className="flex flex-col items-center justify-center py-2 px-1">
-    <p className="text-[8px] md:text-[10px] font-black text-slate-600 uppercase tracking-tighter mb-1">
+  <div className="flex flex-col items-center justify-center py-1 sm:py-2 px-0.5 sm:px-1">
+    <p className="text-[7px] sm:text-[8px] md:text-[10px] font-black text-slate-600 uppercase tracking-tighter mb-0.5 sm:mb-1">
       {label}
     </p>
     <p
-      className={`text-xs md:text-sm font-black ${highlight ? "text-indigo-400 scale-110" : color}`}
+      className={`text-[11px] sm:text-xs md:text-sm font-black ${highlight ? "text-indigo-400 scale-110" : color}`}
     >
       {val}
     </p>
@@ -31,17 +28,11 @@ const StatBox = ({ label, val, highlight, color = "text-slate-400" }) => (
 );
 
 // --- UNIFIED BATTING CARD ---
-const BattingUnit = ({
-  strikerName,
-  nonStrikerName,
-  stats,
-  battingTeam,
-  fallOfWickets,
-}) => (
-  <div className="bg-[#0A0F1E] border border-white/5 rounded-[32px] overflow-hidden shadow-2xl h-full">
+const BattingUnit = ({ strikerName, nonStrikerName, stats, battingTeam }) => (
+  <div className="bg-[#0A0F1E] border border-white/5 rounded-2xl sm:rounded-[32px] overflow-hidden shadow-2xl h-full">
     {/* HEADER */}
-    <div className="bg-white/[0.02] px-6 py-4 border-b border-white/5 flex items-center gap-2">
-      <Swords size={14} className="text-indigo-500" />
+    <div className="bg-white/[0.02] px-4 sm:px-6 py-3 sm:py-4 border-b border-white/5 flex items-center gap-2">
+      <Swords size={14} className="text-indigo-500 shrink-0" />
       <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
         {battingTeam} Batting
       </span>
@@ -55,18 +46,18 @@ const BattingUnit = ({
       ].map((player, idx) => (
         <div
           key={idx}
-          className={`p-5 flex justify-between items-center ${
+          className={`p-3.5 sm:p-5 flex justify-between items-center gap-2 ${
             player.active ? "bg-indigo-500/[0.03]" : ""
           }`}
         >
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <div
-              className={`h-1.5 w-1.5 rounded-full ${
+              className={`h-1.5 w-1.5 rounded-full shrink-0 ${
                 player.active ? "bg-indigo-500 animate-pulse" : "bg-slate-800"
               }`}
             />
             <span
-              className={`text-sm font-bold uppercase ${
+              className={`text-xs sm:text-sm font-bold uppercase ${
                 player.active ? "text-white" : "text-slate-500"
               }`}
             >
@@ -74,7 +65,7 @@ const BattingUnit = ({
             </span>
           </div>
 
-          <div className="grid grid-cols-5 gap-3 md:gap-6 min-w-[180px] md:min-w-[240px]">
+          <div className="grid grid-cols-5 gap-1.5 sm:gap-3 md:gap-6 sm:min-w-[180px] md:min-w-[240px]">
             <StatBox
               label="R"
               val={player.s?.runs || 0}
@@ -98,9 +89,9 @@ const BattingUnit = ({
       ))}
     </div>
 
-    {/* OUT PLAYERS (NEW SECTION) */}
+    {/* OUT PLAYERS */}
     <div className="border-t border-white/5">
-      <p className="px-5 py-3 text-[10px] text-slate-500 uppercase tracking-[0.2em]">
+      <p className="px-4 sm:px-5 py-2.5 sm:py-3 text-[10px] text-slate-500 uppercase tracking-[0.2em]">
         Fall of Wickets
       </p>
 
@@ -109,15 +100,19 @@ const BattingUnit = ({
         .map(([name, s], i) => (
           <div
             key={i}
-            className="px-5 py-2 flex justify-between text-sm text-slate-400"
+            className="px-4 sm:px-5 py-2 flex justify-between text-xs sm:text-sm text-slate-400 gap-2"
           >
             <span>{name}</span>
-            <span className="text-slate-500 text-xs">{s.outBy}</span>
+            <span className="text-slate-500 text-[10px] sm:text-xs">
+              {s.outBy}
+            </span>
           </div>
         ))}
 
       {Object.values(stats).filter((s) => s.outBy).length === 0 && (
-        <p className="px-5 pb-4 text-xs text-slate-600">No wickets yet</p>
+        <p className="px-4 sm:px-5 pb-3 sm:pb-4 text-xs text-slate-600">
+          No wickets yet
+        </p>
       )}
     </div>
   </div>
@@ -132,40 +127,40 @@ const BowlingUnit = ({ name, stats, bowlingTeam, allBowlers }) => {
   const econ = balls > 0 ? (safeStats.runs / (balls / 6)).toFixed(1) : "0.0";
 
   return (
-    <div className="bg-[#0A0F1E] border border-white/5 rounded-[32px] overflow-hidden shadow-2xl h-full">
+    <div className="bg-[#0A0F1E] border border-white/5 rounded-2xl sm:rounded-[32px] overflow-hidden shadow-2xl h-full">
       {/* HEADER */}
-      <div className="bg-white/[0.02] px-6 py-4 border-b border-white/5 flex items-center gap-2">
-        <Target size={14} className="text-emerald-500" />
+      <div className="bg-white/[0.02] px-4 sm:px-6 py-3 sm:py-4 border-b border-white/5 flex items-center gap-2">
+        <Target size={14} className="text-emerald-500 shrink-0" />
         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
           {bowlingTeam || "Team"} Bowling
         </span>
       </div>
 
       {/* BODY */}
-      <div className="p-6 flex flex-col justify-center h-full min-h-[160px]">
+      <div className="p-4 sm:p-6 flex flex-col justify-center h-full min-h-[140px] sm:min-h-[160px]">
         {/* CURRENT BOWLER */}
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex items-center gap-3">
-            <div className="h-2 w-2 bg-emerald-500 rounded-full" />
+        <div className="flex justify-between items-center mb-4 sm:mb-6 gap-2">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <div className="h-2 w-2 bg-emerald-500 rounded-full shrink-0" />
 
-            <div>
-              <p className="text-[10px] text-slate-500 uppercase tracking-[0.2em]">
+            <div className="min-w-0">
+              <p className="text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-[0.2em]">
                 Current Bowler
               </p>
 
-              <span className="text-lg font-black text-white uppercase">
+              <span className="text-base sm:text-lg font-black text-white uppercase truncate block">
                 {name || "Not Selected"}
               </span>
             </div>
           </div>
 
-          <div className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-[8px] font-black text-emerald-500 uppercase">
+          <div className="px-2.5 sm:px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-[7px] sm:text-[8px] font-black text-emerald-500 uppercase shrink-0">
             Active
           </div>
         </div>
 
         {/* CURRENT STATS */}
-        <div className="grid grid-cols-5 gap-2 border-t border-white/5 pt-6">
+        <div className="grid grid-cols-5 gap-1 sm:gap-2 border-t border-white/5 pt-4 sm:pt-6">
           <StatBox label="O" val={overs} color="text-white" />
           <StatBox label="M" val={safeStats.maidens || 0} />
           <StatBox label="R" val={safeStats.runs || 0} />
@@ -178,8 +173,8 @@ const BowlingUnit = ({ name, stats, bowlingTeam, allBowlers }) => {
           <StatBox label="EC" val={econ} color="text-indigo-500" />
         </div>
 
-        {/* 🔥 ALL BOWLERS HISTORY */}
-        <div className="mt-6 border-t border-white/5 pt-4">
+        {/* ALL BOWLERS HISTORY */}
+        <div className="mt-4 sm:mt-6 border-t border-white/5 pt-3 sm:pt-4">
           <p className="text-[10px] text-slate-500 uppercase tracking-[0.2em] mb-2">
             Bowling History
           </p>
@@ -191,14 +186,14 @@ const BowlingUnit = ({ name, stats, bowlingTeam, allBowlers }) => {
             return (
               <div
                 key={i}
-                className={`flex justify-between text-sm py-1 ${
+                className={`flex justify-between text-xs sm:text-sm py-1 gap-2 ${
                   bowler === name
                     ? "text-white font-semibold"
                     : "text-slate-400"
                 }`}
               >
-                <span>{bowler}</span>
-                <span>{ov} ov</span>
+                <span className="truncate">{bowler}</span>
+                <span className="shrink-0">{ov} ov</span>
               </div>
             );
           })}
@@ -211,6 +206,7 @@ const BowlingUnit = ({ name, stats, bowlingTeam, allBowlers }) => {
     </div>
   );
 };
+
 export default function Scoreboard() {
   const navigate = useNavigate();
   const { state, dispatch } = useMatch();
@@ -268,7 +264,6 @@ export default function Scoreboard() {
   ]);
   const scrollRef = useRef(null);
 
-  // NEW EFFECT
   useEffect(() => {
     if (balls > 0 && balls % 6 === 0 && !modal.type) {
       setModal({ type: "bowler", name: "" });
@@ -291,58 +286,62 @@ export default function Scoreboard() {
   // --- CLEAN RESPONSIVE SETUP FORM ---
   if (!matchStarted)
     return (
-      <div className="w-full max-w-5xl mx-auto min-h-[85vh] flex items-center justify-center px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 w-full bg-[#0A0F1E] border border-white/10 rounded-3xl overflow-hidden shadow-xl">
+      <div className="w-full max-w-5xl mx-auto flex items-center justify-center px-3 sm:px-4 py-6 sm:py-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 w-full bg-[#0A0F1E] border border-white/10 rounded-2xl md:rounded-3xl overflow-hidden shadow-xl">
           {/* LEFT PANEL */}
-          <div className="relative p-6 sm:p-8 md:p-10 bg-indigo-600 flex flex-col justify-between text-white overflow-hidden">
-            <div className="absolute top-0 right-0 p-6 opacity-10">
-              <Trophy size={160} />
+          <div className="relative px-5 py-6 sm:p-8 md:p-10 bg-indigo-600 flex flex-col justify-between text-white overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-10">
+              <Trophy size={120} />
             </div>
 
-            <div className="relative z-10">
-              <div className="h-10 w-10 bg-white/20 rounded-xl flex items-center justify-center mb-6">
-                <Zap size={18} />
+            <div className="relative z-10 flex items-center md:block gap-3">
+              <div className="h-9 w-9 md:h-10 md:w-10 shrink-0 bg-white/20 rounded-xl flex items-center justify-center mb-0 md:mb-6">
+                <Zap size={16} />
               </div>
 
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-[-0.04em] leading-tight uppercase">
-                Match <br /> Analytics
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.02em] md:tracking-[-0.04em] leading-tight uppercase">
+                Match <br className="hidden md:block" /> Analytics
               </h2>
 
-              <p className="mt-3 text-xs text-indigo-100/80 font-medium uppercase tracking-[0.2em]">
+              <p className="mt-2 md:mt-3 text-[10px] sm:text-xs text-indigo-100/80 font-medium uppercase tracking-[0.15em] md:tracking-[0.2em]">
                 Official Scoring Interface
               </p>
             </div>
 
-            <div className="relative z-10 text-[11px] font-semibold opacity-70 uppercase tracking-[0.2em] mt-6">
+            <div className="relative z-10 text-[10px] md:text-[11px] font-semibold opacity-70 uppercase tracking-[0.2em] mt-4 md:mt-6">
               Innings 0{inningsNumber} Configuration
             </div>
           </div>
 
           {/* RIGHT PANEL */}
-          <div className="p-6 sm:p-8 md:p-10 flex flex-col justify-center space-y-6">
+          <div className="px-5 py-6 sm:p-8 md:p-10 flex flex-col justify-center gap-5">
             <div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white uppercase tracking-tight">
+              <h3 className="text-lg sm:text-2xl font-bold text-white uppercase tracking-tight">
                 Set Your Lineup
               </h3>
-              <p className="text-slate-400 text-[11px] uppercase tracking-[0.2em] mt-1">
+              <p className="text-slate-400 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] mt-1">
                 Enter players and starting bowler
               </p>
             </div>
 
-            {["striker", "nonStriker", "bowler"].map((f) => (
-              <div key={f} className="space-y-1">
-                <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-[0.15em]">
-                  {f}
-                </label>
+            <div className="space-y-4">
+              {["striker", "nonStriker", "bowler"].map((f) => (
+                <div key={f} className="space-y-1.5">
+                  <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-[0.15em]">
+                    {f}
+                  </label>
 
-                <input
-                  className="w-full bg-white/[0.04] border border-white/10 px-4 py-3 rounded-xl text-white outline-none focus:border-indigo-500 transition"
-                  placeholder={`Enter ${f} name`}
-                  value={setup[f]}
-                  onChange={(e) => setSetup({ ...setup, [f]: e.target.value })}
-                />
-              </div>
-            ))}
+                  <input
+                    className="w-full bg-white/[0.04] border border-white/10 px-4 py-3 rounded-xl text-white outline-none focus:border-indigo-500 transition"
+                    placeholder={`Enter ${f} name`}
+                    value={setup[f]}
+                    onChange={(e) =>
+                      setSetup({ ...setup, [f]: e.target.value })
+                    }
+                  />
+                </div>
+              ))}
+            </div>
 
             <Button
               onClick={() =>
@@ -354,27 +353,27 @@ export default function Scoreboard() {
                 })
               }
               disabled={!setup.striker || !setup.nonStriker || !setup.bowler}
-              className="w-full h-14 bg-white text-black hover:bg-indigo-500 hover:text-white font-semibold text-base rounded-xl mt-4 transition active:scale-95"
+              className="w-full h-13 sm:h-14 bg-white text-black hover:bg-indigo-500 hover:text-white font-semibold text-sm sm:text-base rounded-xl mt-2 transition active:scale-95"
             >
-              Start Match <ChevronRight className="ml-2" />
+              Start Match <ChevronRight className="ml-2" size={18} />
             </Button>
           </div>
         </div>
       </div>
     );
+
   return (
-    <div className="w-full max-w-[1300px] mx-auto pb-24 px-4 pt-8 animate-in fade-in duration-700">
+    <div className="w-full max-w-[1300px] mx-auto pb-20 sm:pb-24 px-3 sm:px-4 pt-5 sm:pt-8 animate-in fade-in duration-700">
       {/* HEADER SCOREBOARD */}
-      <div className="bg-[#0A0F1E] border border-white/5 rounded-3xl p-5 sm:p-6 md:p-10 mb-6 relative overflow-hidden shadow-xl">
-        {/* Background Icon */}
+      <div className="bg-[#0A0F1E] border border-white/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-10 mb-5 sm:mb-6 relative overflow-hidden shadow-xl">
         <div className="absolute top-0 right-0 p-6 opacity-[0.04] rotate-12">
           <Activity size={120} className="text-indigo-500" />
         </div>
 
-        <div className="relative z-10 flex flex-col md:flex-row justify-between items-center md:items-end gap-8 text-center md:text-left">
+        <div className="relative z-10 flex flex-col md:flex-row justify-between items-center md:items-end gap-5 sm:gap-8 text-center md:text-left">
           {/* LEFT SIDE */}
           <div>
-            <div className="inline-block px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-[10px] font-semibold text-indigo-400 uppercase tracking-[0.2em] mb-3">
+            <div className="inline-block px-2.5 sm:px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-[9px] sm:text-[10px] font-semibold text-indigo-400 uppercase tracking-[0.2em] mb-2.5 sm:mb-3">
               Batting: {battingTeam}
             </div>
 
@@ -382,10 +381,10 @@ export default function Scoreboard() {
               <span className="text-5xl sm:text-7xl md:text-[110px] font-black text-white leading-none">
                 {runs}
               </span>
-              <span className="text-3xl sm:text-5xl font-black text-indigo-500">
+              <span className="text-2xl sm:text-5xl font-black text-indigo-500">
                 /
               </span>
-              <span className="text-4xl sm:text-6xl font-black text-slate-500">
+              <span className="text-3xl sm:text-6xl font-black text-slate-500">
                 {wickets}
               </span>
             </div>
@@ -393,22 +392,19 @@ export default function Scoreboard() {
 
           {/* RIGHT SIDE */}
           <div className="flex flex-col items-center md:items-end gap-2">
-            {/* Overs */}
-            <div className="text-3xl sm:text-5xl md:text-6xl font-black text-white leading-none">
+            <div className="text-2xl sm:text-5xl md:text-6xl font-black text-white leading-none">
               {oversText}
             </div>
-            <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-[0.3em]">
+            <p className="text-[9px] sm:text-[10px] font-semibold text-slate-500 uppercase tracking-[0.3em]">
               Overs
             </p>
 
-            {/* Run Rate */}
-            <div className="mt-2 text-[11px] text-indigo-400 font-semibold uppercase tracking-[0.2em]">
+            <div className="mt-1 sm:mt-2 text-[10px] sm:text-[11px] text-indigo-400 font-semibold uppercase tracking-[0.2em]">
               CRR: {balls > 0 ? (runs / (balls / 6)).toFixed(2) : "0.00"}
             </div>
 
-            {/* Target */}
             {target && (
-              <div className="mt-3 bg-white/5 px-4 py-2 rounded-xl border border-white/5 text-[11px] font-medium text-indigo-300 uppercase tracking-[0.15em] text-center md:text-right">
+              <div className="mt-2 sm:mt-3 bg-white/5 px-3.5 sm:px-4 py-2 rounded-xl border border-white/5 text-[10px] sm:text-[11px] font-medium text-indigo-300 uppercase tracking-[0.12em] sm:tracking-[0.15em] text-center md:text-right">
                 Target {target} • Need {target - runs} off {totalBalls - balls}{" "}
                 balls
               </div>
@@ -418,7 +414,7 @@ export default function Scoreboard() {
       </div>
 
       {/* UNIFIED CARDS SECTION */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10">
         <div className="lg:col-span-2">
           <BattingUnit
             strikerName={striker}
@@ -437,21 +433,21 @@ export default function Scoreboard() {
       </div>
 
       {/* --- SCORING CONTROLS --- */}
-      <div className="mb-10">
-        {/* -------- RUNS -------- */}
-        <div className="mb-6">
-          <p className="text-[10px] text-slate-500 uppercase tracking-[0.25em] mb-3">
+      <div className="mb-8 sm:mb-10">
+        {/* RUNS */}
+        <div className="mb-5 sm:mb-6">
+          <p className="text-[10px] text-slate-500 uppercase tracking-[0.25em] mb-2.5 sm:mb-3">
             Runs
           </p>
 
-          <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
+          <div className="grid grid-cols-4 md:grid-cols-6 gap-2 sm:gap-3">
             {[0, 1, 2, 3, 4, 6].map((n) => (
               <button
                 key={n}
                 onClick={() =>
                   dispatch({ type: "BALL_EVENT", runs: n, event: String(n) })
                 }
-                className="h-16 md:h-20 bg-white text-black hover:bg-indigo-600 hover:text-white font-black rounded-[24px] text-2xl transition-all shadow-lg active:scale-90"
+                className="h-14 sm:h-16 md:h-20 bg-white text-black hover:bg-indigo-600 hover:text-white font-black rounded-2xl sm:rounded-[24px] text-lg sm:text-2xl transition-all shadow-lg active:scale-90"
               >
                 {n}
               </button>
@@ -459,13 +455,13 @@ export default function Scoreboard() {
           </div>
         </div>
 
-        {/* -------- EXTRAS -------- */}
-        <div className="mb-6">
-          <p className="text-[10px] text-slate-500 uppercase tracking-[0.25em] mb-3">
+        {/* EXTRAS */}
+        <div className="mb-5 sm:mb-6">
+          <p className="text-[10px] text-slate-500 uppercase tracking-[0.25em] mb-2.5 sm:mb-3">
             Extras
           </p>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
             <button
               onClick={() =>
                 dispatch({
@@ -475,7 +471,7 @@ export default function Scoreboard() {
                   event: "WD",
                 })
               }
-              className="h-16 md:h-20 bg-orange-600/10 text-orange-500 border border-orange-500/20 font-black rounded-[24px] text-lg hover:bg-orange-500 hover:text-white transition-all"
+              className="h-14 sm:h-16 md:h-20 bg-orange-600/10 text-orange-500 border border-orange-500/20 font-black rounded-2xl sm:rounded-[24px] text-base sm:text-lg hover:bg-orange-500 hover:text-white transition-all"
             >
               WD
             </button>
@@ -489,7 +485,7 @@ export default function Scoreboard() {
                   event: "NB",
                 })
               }
-              className="h-16 md:h-20 bg-yellow-600/10 text-yellow-400 border border-yellow-500/20 font-black rounded-[24px] text-lg hover:bg-yellow-500 hover:text-black transition-all"
+              className="h-14 sm:h-16 md:h-20 bg-yellow-600/10 text-yellow-400 border border-yellow-500/20 font-black rounded-2xl sm:rounded-[24px] text-base sm:text-lg hover:bg-yellow-500 hover:text-black transition-all"
             >
               NB
             </button>
@@ -503,7 +499,7 @@ export default function Scoreboard() {
                   event: "BYE",
                 })
               }
-              className="h-16 md:h-20 bg-white/5 text-slate-300 border border-white/10 font-black rounded-[24px] text-sm hover:bg-white/10 transition-all"
+              className="h-14 sm:h-16 md:h-20 bg-white/5 text-slate-300 border border-white/10 font-black rounded-2xl sm:rounded-[24px] text-xs sm:text-sm hover:bg-white/10 transition-all"
             >
               BYE
             </button>
@@ -517,51 +513,51 @@ export default function Scoreboard() {
                   event: "LB",
                 })
               }
-              className="h-16 md:h-20 bg-white/5 text-slate-300 border border-white/10 font-black rounded-[24px] text-sm hover:bg-white/10 transition-all"
+              className="h-14 sm:h-16 md:h-20 bg-white/5 text-slate-300 border border-white/10 font-black rounded-2xl sm:rounded-[24px] text-xs sm:text-sm hover:bg-white/10 transition-all"
             >
               LB
             </button>
           </div>
         </div>
 
-        {/* -------- WICKET -------- */}
+        {/* WICKET */}
         <div>
-          <p className="text-[10px] text-slate-500 uppercase tracking-[0.25em] mb-3">
+          <p className="text-[10px] text-slate-500 uppercase tracking-[0.25em] mb-2.5 sm:mb-3">
             Wicket
           </p>
 
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-2 sm:gap-3">
             <button
               onClick={() => setModal({ type: "wicket", name: "" })}
-              className="h-16 md:h-20 bg-red-600 text-white font-black rounded-[24px] text-sm hover:bg-red-700"
+              className="h-14 sm:h-16 md:h-20 bg-red-600 text-white font-black rounded-2xl sm:rounded-[24px] text-xs sm:text-sm hover:bg-red-700"
             >
               OUT
             </button>
 
             <button
               onClick={() => setModal({ type: "wicket", name: "" })}
-              className="h-16 md:h-20 bg-red-600/80 text-white font-black rounded-[24px] text-sm hover:bg-red-700"
+              className="h-14 sm:h-16 md:h-20 bg-red-600/80 text-white font-black rounded-2xl sm:rounded-[24px] text-xs sm:text-sm hover:bg-red-700"
             >
               CATCH
             </button>
 
             <button
               onClick={() => setModal({ type: "wicket", name: "" })}
-              className="h-16 md:h-20 bg-red-600/80 text-white font-black rounded-[24px] text-sm hover:bg-red-700"
+              className="h-14 sm:h-16 md:h-20 bg-red-600/80 text-white font-black rounded-2xl sm:rounded-[24px] text-xs sm:text-sm hover:bg-red-700"
             >
               LBW
             </button>
 
             <button
               onClick={() => setModal({ type: "wicket", name: "" })}
-              className="h-16 md:h-20 bg-red-600/80 text-white font-black rounded-[24px] text-sm hover:bg-red-700"
+              className="h-14 sm:h-16 md:h-20 bg-red-600/80 text-white font-black rounded-2xl sm:rounded-[24px] text-xs sm:text-sm hover:bg-red-700"
             >
               RUN OUT
             </button>
 
             <button
               onClick={() => setModal({ type: "wicket", name: "" })}
-              className="h-16 md:h-20 bg-red-600/80 text-white font-black rounded-[24px] text-sm hover:bg-red-700"
+              className="h-14 sm:h-16 md:h-20 bg-red-600/80 text-white font-black rounded-2xl sm:rounded-[24px] text-xs sm:text-sm hover:bg-red-700"
             >
               STUMP
             </button>
@@ -569,10 +565,10 @@ export default function Scoreboard() {
         </div>
       </div>
 
-      {/* --- ELITE MATCH TIMELINE (CRICBUZZ PRO STYLE) --- */}
-      <div className="bg-[#0A0F1E] border border-white/5 rounded-3xl p-5 sm:p-6 md:p-8 shadow-xl">
+      {/* --- ELITE MATCH TIMELINE --- */}
+      <div className="bg-[#0A0F1E] border border-white/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl">
         {/* HEADER */}
-        <div className="flex items-center justify-between mb-6 border-b border-white/5 pb-4">
+        <div className="flex items-center justify-between mb-4 sm:mb-6 border-b border-white/5 pb-3 sm:pb-4">
           <div className="flex items-center gap-2">
             <Activity size={16} className="text-indigo-500" />
             <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
@@ -587,7 +583,7 @@ export default function Scoreboard() {
 
         {/* SCROLL AREA */}
         <ScrollArea ref={scrollRef} className="h-[350px] w-full">
-          <div className="flex flex-col-reverse gap-3 pr-4">
+          <div className="flex flex-col-reverse gap-2.5 sm:gap-3 pr-3 sm:pr-4">
             {ballLog?.length > 0 ? (
               ballLog.map((log, i) => {
                 const isBoundary = log.runs === 4 || log.runs === 6;
@@ -595,31 +591,33 @@ export default function Scoreboard() {
                 return (
                   <div
                     key={i}
-                    className={`p-4 rounded-2xl border transition ${
+                    className={`p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border transition ${
                       i === 0
                         ? "border-indigo-500/30 bg-indigo-500/[0.05]"
                         : "border-white/5 bg-white/[0.02]"
                     } hover:bg-white/[0.04]`}
                   >
                     {/* TOP */}
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center gap-3 flex-wrap">
+                    <div className="flex items-center justify-between text-sm gap-2">
+                      <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                         <span className="text-[11px] text-slate-500">
                           {log.over}
                         </span>
 
-                        <span className="text-white font-semibold">
+                        <span className="text-white font-semibold text-xs sm:text-sm">
                           {log.bowler}
                         </span>
 
                         <span className="text-slate-500 text-xs">to</span>
 
-                        <span className="text-slate-300">{log.batsman}</span>
+                        <span className="text-slate-300 text-xs sm:text-sm">
+                          {log.batsman}
+                        </span>
                       </div>
 
                       {/* RESULT */}
                       <div
-                        className={`h-9 w-9 rounded-lg flex items-center justify-center text-sm font-bold ${
+                        className={`h-8 w-8 sm:h-9 sm:w-9 shrink-0 rounded-lg flex items-center justify-center text-sm font-bold ${
                           log.isWicket
                             ? "bg-red-600 text-white"
                             : isBoundary
@@ -632,7 +630,7 @@ export default function Scoreboard() {
                     </div>
 
                     {/* COMMENT */}
-                    <p className="mt-2 text-[12px] text-slate-400 leading-relaxed">
+                    <p className="mt-2 text-[11px] sm:text-[12px] text-slate-400 leading-relaxed">
                       {log.isWicket
                         ? `${log.bowler} dismisses ${log.batsman}. Big breakthrough.`
                         : isBoundary
@@ -659,15 +657,15 @@ export default function Scoreboard() {
 
       {/* MODALS */}
       {modal.type && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[100] px-4">
-          <div className="w-full max-w-sm bg-[#0A0F1E] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl text-center">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[100] px-3 sm:px-4">
+          <div className="w-full max-w-sm bg-[#0A0F1E] border border-white/10 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl text-center">
             {/* Icon */}
-            <div className="h-14 w-14 bg-white/5 rounded-xl flex items-center justify-center mx-auto mb-6">
+            <div className="h-12 w-12 sm:h-14 sm:w-14 bg-white/5 rounded-xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
               <UserPlus className="text-indigo-500" size={20} />
             </div>
 
             {/* Title */}
-            <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+            <h3 className="text-lg sm:text-2xl font-bold text-white tracking-tight">
               {modal.type === "wicket" ? "Wicket Fall" : "Change Bowler"}
             </h3>
 
@@ -678,7 +676,7 @@ export default function Scoreboard() {
 
             {/* Input */}
             <input
-              className="w-full mt-6 bg-white/[0.04] border border-white/10 px-4 py-3 rounded-xl text-white outline-none text-center font-semibold text-base focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 transition"
+              className="w-full mt-5 sm:mt-6 bg-white/[0.04] border border-white/10 px-4 py-3 rounded-xl text-white outline-none text-center font-semibold text-base focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 transition"
               autoFocus
               placeholder="Enter name"
               value={modal.name}
@@ -687,7 +685,7 @@ export default function Scoreboard() {
 
             {/* Button */}
             <Button
-              className="w-full mt-6 h-12 bg-white text-black hover:bg-slate-200 font-semibold rounded-xl transition active:scale-95 flex items-center justify-center gap-2"
+              className="w-full mt-5 sm:mt-6 h-12 bg-white text-black hover:bg-slate-200 font-semibold rounded-xl transition active:scale-95 flex items-center justify-center gap-2"
               onClick={() => {
                 if (modal.name.trim()) {
                   dispatch({

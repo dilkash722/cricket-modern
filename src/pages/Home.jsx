@@ -33,11 +33,11 @@ export default function Home() {
 
         {/* Hero Title */}
         <div className="mb-9 space-y-2">
-          <h1 className="text-7xl md:text-[140px] font-black tracking-tight leading-[0.82] uppercase text-white drop-shadow-2xl">
-            CRICKET
+          <h1 className="text-7xl md:text-[140px] font-black tracking-tight leading-[0.82] text-white drop-shadow-2xl">
+            Cricket
           </h1>
-          <h1 className="text-7xl md:text-[140px] font-black tracking-tight leading-[0.82] uppercase bg-clip-text text-transparent bg-gradient-to-b from-slate-100 to-slate-600">
-            MODERN
+          <h1 className="text-7xl md:text-[140px] font-black tracking-tight leading-[0.82] bg-clip-text text-transparent bg-gradient-to-b from-slate-100 to-slate-600">
+            Modern
           </h1>
         </div>
 
