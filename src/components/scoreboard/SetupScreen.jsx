@@ -42,16 +42,6 @@ export default function SetupScreen({
 
         {/* BOTTOM / RIGHT */}
         <div className="px-5 py-6 sm:p-8 md:p-10 flex flex-col justify-center gap-5">
-          <div>
-            <h3 className="text-lg sm:text-2xl font-bold text-white uppercase tracking-tight">
-              Set Your Lineup
-            </h3>
-
-            <p className="text-slate-400 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] mt-1">
-              Enter players and starting bowler
-            </p>
-          </div>
-
           <div className="space-y-4">
             {fields.map(({ key, icon: Icon, label }) => (
               <div key={key} className="space-y-1.5">

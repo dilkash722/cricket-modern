@@ -148,7 +148,7 @@ export default function Result() {
               size={26}
             />
 
-            <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight uppercase text-white leading-none px-2 break-words max-w-full">
+            <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-none px-2 break-words max-w-full">
               {winnerText}
             </h1>
 
